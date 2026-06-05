@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Happy 18th Birthday My Love 💙</title>
+  <!-- Single-file HTML, CSS & JavaScript - Romantic Birthday Page -->
+  <style>
+    /* ----- CSS Variables & Reset ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --soft-blue: #d0e4f5;
+      --pastel-lavender: #e3d9f1;
+      --white-warm: #f9f7fa;
+      --deep-blue: #2c3e50;
+      --accent-blue: #5b7fa5;
+      --glass-bg: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.5);
+      --shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+      --font-main: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+      --font-accent: 'Inter', 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(145deg, #e9f2fa 0%, #f0e6f6 100%);
+      font-family: var(--font-accent);
+      color: var(--deep-blue);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    body.loaded {
+      opacity: 1;
+    }
+
+    /* ----- Floral & Petals Background Animation ----- */
+    .petals-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #b8d4f0);
+      border-radius: 80% 20% 70% 30% / 40% 60% 40% 60%;
+      box-shadow: 0 4px 10px rgba(91, 127, 165, 0.08);
+      opacity: 0.72;
+      /* use a CSS variable for duration so per-child can override cleanly */
+      animation: floatPetal 11s linear infinite;
+      transform-origin: center;
+      will-change: transform;
+      pointer-events: none;
+      -webkit-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0); ;
+    }
+
+    @keyframes floatPetal {
+      0% {
+        transform: translate3d(0, -8vh, 0) rotate(0deg) scale(0.85);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translate3d(0, 110vh, 0) rotate(360deg) scale(0.85);
+        opacity: 0;
+      }
+    }
+
+    /* Per-petal variations (durations, delays, sizes) — fewer petals to reduce paint cost */
+    .petal:nth-child(1)  { left: 6%;  animation-duration: 16s; animation-delay: 0s;  font-size: 1.6rem; }
+    .petal:nth-child(2)  { left: 20%; animation-duration: 18s; animation-delay: 2s;  font-size: 1.3rem; }
+    .petal:nth-child(3)  { left: 34%; animation-duration: 20s; animation-delay: 1s;  font-size: 1.5rem; }
+    .petal:nth-child(4)  { left: 48%; animation-duration: 22s; animation-delay: 3s;  font-size: 1.2rem; }
+    .petal:nth-child(5)  { left: 62%; animation-duration: 19s; animation-delay: 0.8s; font-size: 1.4rem; }
+    .petal:nth-child(6)  { left: 80%; animation-duration: 21s; animation-delay: 2.4s; font-size: 1.3rem; }
+
+    /* Respect user preference for reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .petal, .flower-loader, .glow-text {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* While scrolling, pause non-essential animations */
+    .scrolling .petal,
+    .scrolling .glow-text,
+    .scrolling .flower-loader {
+      animation-play-state: paused !important;
+    }
+
+    /* Subtle floating hearts */
+    .floating-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      color: rgba(91, 127, 165, 0.25);
+      font-size: 1.8rem;
+      animation: riseHeart 8s infinite ease-in;
+      opacity: 0;
+    }
+
+    @keyframes riseHeart {
+      0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.7;
+      }
+      80% {
+        opacity: 0.2;
+      }
+      100% {
+        transform: translateY(-120vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* ----- Main wrapper with glassmorphism cards ----- */
+    .main-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+
+    /* Glass card style */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2.5rem;
+      box-shadow: var(--shadow);
+      padding: 2.8rem 2rem;
+      transition: transform 0.18s ease, box-shadow 0.18s;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 30px 45px rgba(0, 0, 0, 0.12);
+    }
+
+    /* ----- Typography ----- */
+    h1 {
+      font-family: var(--font-main);
+      font-size: clamp(2.8rem, 8vw, 4.5rem);
+      font-weight: 500;
+      color: #1e3b5a;
+      text-shadow: 1px 1px 6px rgba(255, 255, 255, 0.9);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-family: var(--font-main);
+      font-size: 2rem;
+      font-weight: 400;
+      color: #3a5a78;
+      margin-bottom: 1.5rem;
+    }
+
+    .romantic-subtext {
+      font-size: 1.25rem;
+      font-weight: 300;
+      color: #4b6379;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    .message-text {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #2c3e50;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+      white-space: pre-line;
+    }
+
+    /* ----- Buttons & Music Toggle ----- */
+    .music-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 99;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      width: 55px;
+      height: 55px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      color: #2c3e50;
+    }
+
+    .music-btn:hover {
+      background: white;
+      transform: scale(1.08);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    }
+
+    /* Memory cards grid */
+    .notes-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.8rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+
+    .note-card {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 1.8rem;
+      padding: 1.8rem 1.5rem;
+      flex: 1 1 150px;
+      min-width: 140px;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: #1e3b5a;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 10px 18px rgba(0,0,0,0.05);
+      transition: 0.25s ease;
+    }
+
+    .note-card:hover {
+      background: rgba(255, 255, 255, 0.8);
+      transform: scale(1.03);
+      box-shadow: 0 15px 25px rgba(91,127,165,0.15);
+    }
+
+    /* Glowing final wish */
+    .glow-text {
+      font-family: var(--font-main);
+      font-size: 2.4rem;
+      text-align: center;
+      animation: softGlow 2.5s infinite alternate;
+      color: #1e3b5a;
+    }
+
+    @keyframes softGlow {
+      0% { text-shadow: 0 0 6px #d4e2f0, 0 0 12px #b2c9df; }
+      100% { text-shadow: 0 0 10px #b0c7dd, 0 0 20px #9bb5cf; }
+    }
+
+    footer {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #3a5a78;
+      margin-top: 1rem;
+      letter-spacing: 0.5px;
+      font-style: italic;
+    }
+
+    /* SVG floral decoration */
+    .flower-svg {
+      display: flex;
+      justify-content: center;
+      margin: 0.5rem 0;
+      opacity: 0.7;
+    }
+
+    /* Loading screen */
+    .loader-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #e9f2fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      transition: opacity 0.8s ease, visibility 0.8s;
+    }
+
+    .loader-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .flower-loader {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(91,127,165,0.2);
+      border-top: 4px solid #5b7fa5;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .glass-card {
+        padding: 2rem 1.2rem;
+      }
+      .notes-grid {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Animation -->
+  <div class="loader-wrapper" id="loader">
+    <div class="flower-loader"></div>
+  </div>
+
+  <!-- Background petals container (optimized CSS petals - minimal) -->
+  <div class="petals-container" id="petalsContainer">
+    <div class="petal">🌸</div>
+    <div class="petal">💙</div>
+    <div class="petal">✨</div>
+    <div class="petal">🌸</div>
+    <div class="petal">💙</div>
+    <div class="petal">✨</div>
+  </div>
+  <div class="floating-hearts" id="heartsContainer"></div>
+
+  <!-- Music Toggle Button -->
+  <!-- <button class="music-btn" id="musicToggle" aria-label="Toggle romantic music">🎵</button> -->
+
+  <!-- Main Content Sections -->
+  <div class="main-content">
+    
+    <!-- Hero Section -->
+    <section class="glass-card" style="text-align: center;">
+      <div class="flower-svg">
+        <!-- Simple SVG flower illustration -->
+        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#5b7fa5" stroke-width="1.2">
+          <circle cx="12" cy="12" r="3" fill="#d0e4f5" stroke="none"/>
+          <circle cx="12" cy="5" r="2.5" fill="#e3d9f1" stroke="none"/>
+          <circle cx="12" cy="19" r="2.5" fill="#e3d9f1" stroke="none"/>
+          <circle cx="5" cy="12" r="2.5" fill="#e3d9f1" stroke="none"/>
+          <circle cx="19" cy="12" r="2.5" fill="#e3d9f1" stroke="none"/>
+        </svg>
+      </div>
+      <h1>Happy 18th Birthday<br>Sayani 💙</h1>
+      <p class="romantic-subtext">You bloom like the softest flower in my heart</p>
+      <div style="margin-top: 1.8rem; font-size: 1rem; color: #4b6379;">
+        ✦  A day as beautiful as your soul  ✦
+      </div>
+    </section>
+    <script>
+      // Pause animations during scroll to avoid jank
+      (function(){
+        let scrollTimer = null;
+        const SCROLL_PAUSE_MS = 160;
+        function onScroll() {
+          document.documentElement.classList.add('scrolling');
+          if (scrollTimer) clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(() => {
+            document.documentElement.classList.remove('scrolling');
+            scrollTimer = null;
+          }, SCROLL_PAUSE_MS);
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        // Also pause animations while resizing
+        let resizeTimer = null;
+        window.addEventListener('resize', () => {
+          document.documentElement.classList.add('scrolling');
+          if (resizeTimer) clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => document.documentElement.classList.remove('scrolling'), 250);
+        }, { passive: true });
+      })();
+    </script>
+
+    <!-- Main Message Section -->
+    <section class="glass-card">
+      <h2 style="text-align: center;">🌙 A letter for you</h2>
+      <div class="message-text">
+        My Cotton Candy,  
+        Today the world became brighter because eighteen years ago, you came into it.  
+        Every smile you share, every gentle word you whisper, paints my life in shades of blue and soft pastel dreams.  
+        I never knew happiness could feel so quiet and yet so deep — until I met you.  
+        You are the poetry I never knew how to write, the calm in my chaos, and the most beautiful chapter of my story.  
+        With you, even ordinary moments feel like magic; a simple walk becomes a memory I hold close forever.  
+        I dream of all the birthdays we’ll celebrate together, the adventures waiting like unwritten songs.  
+        Thank you for being my safe place, my sparkle, and my favorite hello.  
+        You deserve the entire universe wrapped in love, but today I hope my heart is enough.  
+        Happy 18th, my angel. Here’s to us, to laughter, and to a future filled with warmth.  
+        I love you endlessly.  
+      </div>
+      <div style="text-align: center; margin-top: 2rem; font-style: italic; color: #5b7fa5;">
+        — forever yours 🤍
+      </div>
+    </section>
+
+    <!-- Memory / Cute Notes Section -->
+    <section class="glass-card">
+      <h2 style="text-align: center;">🌸 Little reminders</h2>
+      <div class="notes-grid">
+        <div class="note-card">✨ You make my world brighter</div>
+        <div class="note-card">💙 Every moment with you feels magical</div>
+        <div class="note-card">🌷 You are my favorite thought</div>
+        <div class="note-card">🕊️ My heart smiles because of you</div>
+        <div class="note-card">🌟 Forever grateful for your love</div>
+      </div>
+    </section>
+
+    <!-- Final Glowing Wish Section -->
+    <section class="glass-card" style="text-align: center; padding: 3rem 2rem;">
+      <div class="glow-text">
+        ✨ Happy 18th Birthday,<br>my everything ✨
+      </div>
+      <p style="margin-top: 1.2rem; color: #3a5a78;">May your day be as tender and radiant as you are</p>
+      <div class="flower-svg" style="margin-top: 1.5rem;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="#d0e4f5" opacity="0.8">
+          <path d="M12 2C12 2 10 6 8 8C6 10 2 12 2 12C2 12 6 14 8 16C10 18 12 22 12 22C12 22 14 18 16 16C18 14 22 12 22 12C22 12 18 10 16 8C14 6 12 2 12 2Z" fill="#b8cfe0"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      Made by your loving bf Arko 💙
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      // ----- Loading Screen -----
+      window.addEventListener('load', function() {
+        const loader = document.getElementById('loader');
+        const body = document.body;
+        // Slight delay for smooth transition
+        setTimeout(() => {
+          loader.classList.add('loader-hidden');
+          body.classList.add('loaded');
+        }, 600);
+      });
+
+      // ----- Create Floating Petals -----
+      function createPetals() {
+        const container = document.getElementById('petalsContainer');
+        const petalCount = 28;
+        for (let i = 0; i < petalCount; i++) {
+          const petal = document.createElement('div');
+          petal.className = 'petal';
+          const size = Math.floor(Math.random() * 18 + 10); // 10-28px
+          petal.style.width = `${size}px`;
+          petal.style.height = `${size * 0.9}px`;
+          petal.style.left = `${Math.random() * 100}%`;
+          petal.style.top = `${Math.random() * 100}%`;
+          petal.style.animationDelay = `${Math.random() * 12}s`;
+          petal.style.animationDuration = `${Math.random() * 10 + 10}s`; // 10-20s
+          petal.style.opacity = Math.random() * 0.5 + 0.3;
+          container.appendChild(petal);
+        }
+      }
+
+      // ----- Create Floating Hearts (subtle) -----
+      function createHearts() {
+        const heartsContainer = document.getElementById('heartsContainer');
+        const heartSymbols = ['💙', '🩵', '🤍', '🌸'];
+        for (let i = 0; i < 14; i++) {
+          const heart = document.createElement('div');
+          heart.className = 'heart';
+          heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+          heart.style.left = `${Math.random() * 90}%`;
+          heart.style.bottom = `-30px`;
+          heart.style.animationDelay = `${Math.random() * 8}s`;
+          heart.style.animationDuration = `${Math.random() * 7 + 7}s`;
+          heart.style.fontSize = `${Math.random() * 1.5 + 1.2}rem`;
+          heartsContainer.appendChild(heart);
+        }
+      }
+
+      // ----- Music Toggle with optional romantic instrumental (simulated audio context) -----
+      function setupMusicToggle() {
+        const musicBtn = document.getElementById('musicToggle');
+        let isPlaying = false;
+        // Using Web Audio API for a soft ambient tone as placeholder romantic instrumental
+        let audioCtx = null;
+        let oscillator = null;
+        let gainNode = null;
+
+        const startAmbient = () => {
+          try {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            oscillator = audioCtx.createOscillator();
+            gainNode = audioCtx.createGain();
+            
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(528, audioCtx.currentTime); // soft love frequency
+            gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.start();
+            // Add a gentle second tone
+            const osc2 = audioCtx.createOscillator();
+            const gain2 = audioCtx.createGain();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(396, audioCtx.currentTime);
+            gain2.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            osc2.connect(gain2);
+            gain2.connect(audioCtx.destination);
+            osc2.start();
+            
+            // Store for stopping later
+            oscillator.osc2 = osc2;
+            gainNode.gain2 = gain2;
+            musicBtn.textContent = '🔊';
+            isPlaying = true;
+          } catch (e) {
+            console.log('Audio context not supported or blocked', e);
+            musicBtn.textContent = '🔇';
+          }
+        };
+
+        const stopAmbient = () => {
+          if (oscillator) {
+            oscillator.stop();
+            if (oscillator.osc2) oscillator.osc2.stop();
+            oscillator.disconnect();
+            if (gainNode) gainNode.disconnect();
+            audioCtx.close();
+            oscillator = null;
+            gainNode = null;
+            audioCtx = null;
+          }
+          musicBtn.textContent = '🎵';
+          isPlaying = false;
+        };
+
+        musicBtn.addEventListener('click', () => {
+          if (!isPlaying) {
+            startAmbient();
+          } else {
+            stopAmbient();
+          }
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+          if (isPlaying && oscillator) {
+            stopAmbient();
+          }
+        });
+      }
+
+      // Initialize animations and elements
+      createPetals();
+      createHearts();
+      setupMusicToggle();
+
+      // Smooth scroll behavior for anchor links (if any added later)
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
+
+      // Additional subtle animation on scroll for glass cards (optional)
+      const observerOptions = {
+        threshold: 0.2
+      };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = 1;
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.glass-card').forEach(card => {
+        card.style.opacity = 0;
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.8s ease, transform 0.6s ease';
+        observer.observe(card);
+        // Immediately show first card maybe
+        setTimeout(() => {
+          card.style.opacity = 1;
+          card.style.transform = 'translateY(0)';
+        }, 200);
+      });
+
+    })();
+  </script>
+</body>
+</html>

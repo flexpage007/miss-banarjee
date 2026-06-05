@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Coupon Library</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070b18;
+      --ink: #f6fbff;
+      --muted: #adc2d4;
+      --line: rgba(255, 255, 255, 0.14);
+      --panel: rgba(12, 20, 42, 0.76);
+      --panel-strong: rgba(16, 28, 58, 0.94);
+      --blue: #59b8ff;
+      --red: #ff5f74;
+      --pink: #ff8bd6;
+      --white: #ffffff;
+      --gold: #ffd778;
+      --green: #7ce0a6;
+      --shadow: 0 28px 70px rgba(0, 0, 0, 0.38);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.55;
+      background:
+        radial-gradient(circle at 18% 8%, rgba(89, 184, 255, 0.28), transparent 26rem),
+        radial-gradient(circle at 82% 14%, rgba(255, 95, 116, 0.2), transparent 24rem),
+        radial-gradient(circle at 50% 100%, rgba(255, 215, 120, 0.12), transparent 28rem),
+        linear-gradient(180deg, #070b18 0%, #0a142b 48%, #12091a 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: linear-gradient(to bottom, black, transparent 82%);
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 38px 0 54px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.72fr);
+      gap: 36px;
+      align-items: end;
+      min-height: 56vh;
+      padding: 36px 0 30px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 16px;
+      color: var(--gold);
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 42px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--red));
+      display: inline-block;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: 22px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.4rem, 8vw, 7.3rem);
+      line-height: 0.92;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin-bottom: 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 1.12rem;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 650px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.28rem);
+    }
+
+    .hero-panel {
+      position: relative;
+      min-height: 330px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.03)),
+        rgba(255, 255, 255, 0.06);
+      box-shadow: var(--shadow);
+      animation: floatPanel 7s ease-in-out infinite;
+    }
+
+    .hero-panel::before,
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(2px);
+    }
+
+    .hero-panel::before {
+      width: 240px;
+      height: 240px;
+      right: -70px;
+      top: -60px;
+      background: rgba(89, 184, 255, 0.38);
+    }
+
+    .hero-panel::after {
+      width: 220px;
+      height: 220px;
+      left: -64px;
+      bottom: -70px;
+      background: rgba(255, 95, 116, 0.28);
+    }
+
+    .sample-stack {
+      position: absolute;
+      inset: 28px;
+      display: grid;
+      align-content: center;
+      gap: 12px;
+      z-index: 2;
+    }
+
+    .mini-ticket {
+      position: relative;
+      padding: 16px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08));
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.26);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+
+    .mini-ticket strong {
+      display: block;
+      margin-bottom: 3px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1rem, 2vw, 1.18rem);
+      line-height: 1.1;
+    }
+
+    .mini-ticket span {
+      color: rgba(246, 251, 255, 0.74);
+      font-size: 0.88rem;
+    }
+
+    .mini-ticket.blue {
+      border-color: rgba(89, 184, 255, 0.44);
+    }
+
+    .mini-ticket.red {
+      border-color: rgba(255, 95, 116, 0.48);
+    }
+
+    .mini-ticket.white {
+      border-color: rgba(255, 255, 255, 0.52);
+    }
+
+    .mini-ticket.pink {
+      border-color: rgba(255, 139, 214, 0.56);
+    }
+
+    .controls-shell {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      padding: 16px 0 18px;
+      backdrop-filter: blur(18px);
+    }
+
+    .filter-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 18px;
+      color: var(--ink);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      background:
+        linear-gradient(135deg, rgba(89, 184, 255, 0.22), rgba(255, 139, 214, 0.14)),
+        rgba(7, 11, 24, 0.86);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .filter-toggle::before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      border: 2px solid currentColor;
+      border-radius: 50%;
+      box-shadow: 8px 8px 0 -5px currentColor;
+      transform: rotate(-12deg);
+    }
+
+    .controls {
+      display: none;
+      grid-template-columns: minmax(240px, 1fr) 190px 168px;
+      gap: 12px;
+      padding: 14px;
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(7, 11, 24, 0.78);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.26);
+    }
+
+    .controls-shell.open .controls {
+      display: grid;
+      animation: menuIn 180ms ease both;
+    }
+
+    .search-wrap {
+      position: relative;
+    }
+
+    .search-wrap::before {
+      content: "";
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      width: 13px;
+      height: 13px;
+      border: 2px solid rgba(255, 255, 255, 0.62);
+      border-radius: 50%;
+      transform: translateY(-58%);
+    }
+
+    .search-wrap::after {
+      content: "";
+      position: absolute;
+      left: 29px;
+      top: 52%;
+      width: 8px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.62);
+      transform: rotate(45deg);
+      transform-origin: left center;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 48px;
+      color: var(--ink);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 12px;
+      outline: 0;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    input {
+      padding: 0 16px 0 48px;
+    }
+
+    select {
+      padding: 0 14px;
+      cursor: pointer;
+    }
+
+    select option {
+      color: var(--ink);
+      background: #0d1730;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: rgba(89, 184, 255, 0.72);
+      box-shadow: 0 0 0 4px rgba(89, 184, 255, 0.14);
+    }
+
+    .tier-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 28px;
+    }
+
+    .tier-tab {
+      min-height: 42px;
+      padding: 0 16px;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      cursor: pointer;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .tier-tab:hover,
+    .tier-tab.active {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.34);
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .tier-tab[data-tier="unlimited"].active {
+      box-shadow: 0 0 24px rgba(89, 184, 255, 0.2);
+    }
+
+    .tier-tab[data-tier="one-use"].active {
+      box-shadow: 0 0 24px rgba(255, 95, 116, 0.2);
+    }
+
+    .tier-tab[data-tier="pink"].active {
+      box-shadow: 0 0 24px rgba(255, 139, 214, 0.22);
+    }
+
+    .tier-tab[data-tier="ten-times"].active {
+      box-shadow: 0 0 24px rgba(255, 255, 255, 0.16);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: end;
+      margin: 36px 0 20px;
+    }
+
+    .result-count {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .coupon-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .coupon-card {
+      position: relative;
+      min-height: 300px;
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.05)),
+        var(--panel);
+      transform: translateY(0);
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+      animation: couponIn 0.55s ease both;
+    }
+
+    .coupon-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 34px 78px rgba(0, 0, 0, 0.45);
+    }
+
+    .coupon-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(110deg, transparent 0 30%, rgba(255, 255, 255, 0.24) 42%, transparent 54% 100%);
+      transform: translateX(-120%);
+      animation: gloss 5.8s ease-in-out infinite;
+    }
+
+    .coupon-card::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      right: -66px;
+      top: -64px;
+      border-radius: 50%;
+      opacity: 0.45;
+      filter: blur(1px);
+    }
+
+    .coupon-card.unlimited {
+      border-color: rgba(89, 184, 255, 0.44);
+      background:
+        linear-gradient(135deg, rgba(89, 184, 255, 0.34), rgba(255, 255, 255, 0.06)),
+        rgba(12, 26, 52, 0.9);
+    }
+
+    .coupon-card.unlimited::after {
+      background: var(--blue);
+    }
+
+    .coupon-card.one-use {
+      border-color: rgba(255, 95, 116, 0.48);
+      background:
+        linear-gradient(135deg, rgba(255, 95, 116, 0.34), rgba(255, 255, 255, 0.06)),
+        rgba(42, 12, 28, 0.88);
+    }
+
+    .coupon-card.one-use::after {
+      background: var(--red);
+    }
+
+    .coupon-card.pink {
+      border-color: rgba(255, 139, 214, 0.5);
+      background:
+        linear-gradient(135deg, rgba(255, 139, 214, 0.36), rgba(255, 255, 255, 0.07)),
+        rgba(47, 18, 52, 0.88);
+    }
+
+    .coupon-card.pink::after {
+      background: var(--pink);
+    }
+
+    .coupon-card.ten-times {
+      color: #101827;
+      border-color: rgba(255, 255, 255, 0.68);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(226, 240, 255, 0.76)),
+        rgba(255, 255, 255, 0.88);
+    }
+
+    .coupon-card.ten-times::after {
+      background: rgba(89, 184, 255, 0.52);
+    }
+
+    .coupon-card.ten-times .coupon-description,
+    .coupon-card.ten-times .meta,
+    .coupon-card.ten-times .remaining {
+      color: #34445c;
+    }
+
+    .coupon-top,
+    .coupon-body,
+    .coupon-actions {
+      position: relative;
+      z-index: 2;
+    }
+
+    .coupon-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 20px;
+    }
+
+    .code {
+      display: inline-flex;
+      min-height: 34px;
+      align-items: center;
+      padding: 0 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .coupon-card.ten-times .code {
+      border-color: rgba(16, 24, 39, 0.16);
+      background: rgba(16, 24, 39, 0.06);
+    }
+
+    .tier-pill {
+      display: inline-flex;
+      min-height: 34px;
+      align-items: center;
+      padding: 0 10px;
+      border-radius: 999px;
+      color: #06101f;
+      background: var(--white);
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .tier-pill.unlimited {
+      background: var(--blue);
+    }
+
+    .tier-pill.one-use {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .tier-pill.pink {
+      background: var(--pink);
+      color: #23051c;
+    }
+
+    .coupon-title {
+      margin-bottom: 10px;
+      padding-right: 20px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.8rem;
+      line-height: 1.05;
+    }
+
+    .coupon-description {
+      color: rgba(246, 251, 255, 0.78);
+      min-height: 74px;
+      margin-bottom: 20px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 36px;
+      margin-bottom: 18px;
+      color: rgba(246, 251, 255, 0.72);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .tag {
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .coupon-card.ten-times .tag {
+      background: rgba(16, 24, 39, 0.07);
+    }
+
+    .coupon-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    .remaining {
+      color: rgba(246, 251, 255, 0.78);
+      font-weight: 800;
+    }
+
+    .use-button {
+      min-height: 44px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 12px;
+      color: #071426;
+      background: linear-gradient(135deg, #ffffff, #cfeaff);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+      cursor: pointer;
+      font-weight: 900;
+      transition: transform 180ms ease, opacity 180ms ease;
+    }
+
+    .use-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .use-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.52;
+      transform: none;
+    }
+
+    .empty {
+      display: none;
+      padding: 42px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      color: var(--muted);
+      background: var(--panel);
+      text-align: center;
+    }
+
+    .empty.show {
+      display: block;
+    }
+
+    .terms {
+      margin-top: 54px;
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
+        var(--panel);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
+    }
+
+    .terms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .term {
+      min-height: 118px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .term strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+
+    @keyframes menuIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes couponIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes gloss {
+      0%,
+      68% {
+        transform: translateX(-120%);
+      }
+
+      100% {
+        transform: translateX(120%);
+      }
+    }
+
+    @keyframes floatPanel {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .coupon-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .terms-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100% - 24px, 1180px);
+        padding-top: 24px;
+      }
+
+      h1 {
+        font-size: 3.7rem;
+      }
+
+      .hero-panel {
+        min-height: 330px;
+      }
+
+      .sample-stack {
+        inset: 18px;
+        gap: 10px;
+      }
+
+      .mini-ticket {
+        padding: 13px 14px;
+      }
+
+      .mini-ticket span {
+        font-size: 0.82rem;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .coupon-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .coupon-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .use-button {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero" aria-label="Love coupon library">
+      <div>
+        <p class="eyebrow">Coupon lookup</p>
+        <h1>Love Coupon Library</h1>
+        <p class="lead">
+          A glossy little vault of sweet promises, tiny treats, soft moments, and love you can redeem whenever your heart wants.
+        </p>
+      </div>
+
+      <div class="hero-panel" aria-hidden="true">
+        <div id="spotlightTicket" class="sample-stack"></div>
+      </div>
+    </section>
+
+    <section class="controls-shell" aria-label="Coupon controls">
+      <button id="filterToggle" class="filter-toggle" type="button" aria-expanded="false" aria-controls="couponControls">
+        Search & Sort
+      </button>
+      <div id="couponControls" class="controls">
+        <label class="search-wrap">
+          <input id="searchInput" type="search" placeholder="Search coupon name, code, or tag">
+        </label>
+
+        <select id="sortSelect" aria-label="Sort coupons">
+          <option value="featured">Featured first</option>
+          <option value="tier">Tier color</option>
+          <option value="title">A to Z</option>
+          <option value="remaining">Most remaining</option>
+        </select>
+
+        <select id="statusSelect" aria-label="Coupon status">
+          <option value="all">All status</option>
+          <option value="available">Available</option>
+          <option value="used">Used up</option>
+        </select>
+      </div>
+    </section>
+
+    <nav class="tier-tabs" aria-label="Tier filters">
+      <button class="tier-tab active" type="button" data-tier="all">All Coupons</button>
+      <button class="tier-tab" type="button" data-tier="unlimited">Unlimited Blue</button>
+      <button class="tier-tab" type="button" data-tier="one-use">Red 1-3 Uses</button>
+      <button class="tier-tab" type="button" data-tier="pink">Pink 5-10 Uses</button>
+      <button class="tier-tab" type="button" data-tier="ten-times">10 Times White</button>
+    </nav>
+
+    <section aria-label="Coupons">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Choose a coupon</p>
+          <h2>Available Coupons</h2>
+        </div>
+        <div id="resultCount" class="result-count">0 coupons</div>
+      </div>
+
+      <div id="couponGrid" class="coupon-grid"></div>
+      <div id="emptyState" class="empty">No coupon found for this search.</div>
+    </section>
+
+    <section class="terms" aria-label="Terms and conditions">
+      <p class="eyebrow">Terms and conditions</p>
+      <h2>Coupon Rules</h2>
+      <div class="terms-grid">
+        <div class="term">
+          <strong>Valid only for Sayani Banarjee</strong>
+          These coupons are personal, non-transferable, and made only for the girl who owns my heart.
+        </div>
+        <div class="term">
+          <strong>Redeem with sweetness</strong>
+          A coupon can be used when both hearts are available, happy, and comfortable.
+        </div>
+        <div class="term">
+          <strong>1 year expiry</strong>
+          This coupon subscription is valid for one year from the day it is gifted.
+        </div>
+        <div class="term">
+          <strong>No stacking</strong>
+          Coupons cannot be saved and stacked for next year. The subscription must be renewed with fresh love.
+        </div>
+        <div class="term">
+          <strong>Earn more</strong>
+          Extra coupons can be won or earned through special events, cute dates, surprises, and happy memories.
+        </div>
+        <div class="term">
+          <strong>Unlimited stays special</strong>
+          Unlimited coupons stay open during the active subscription. Limited coupons count down only when used here.
+        </div>
+      </div>
+
+      <div style="color: #ffffff79;position: relative; top: 15px; width: 100%; text-align: right;">- Made By Arko 💙</div>
+    </section>
+  </main>
+
+  <script>
+    const fallbackCoupons = [
+      {
+        id: "unlimited-kiss",
+        code: "BLUE-001",
+        title: "Unlimited Kiss Coupon",
+        tier: "unlimited",
+        description: "Redeem any time for a kiss, no expiry, no questions, only love.",
+        tags: ["kiss", "romantic", "blue", "unlimited"]
+      },
+      {
+        id: "unlimited-hug",
+        code: "BLUE-002",
+        title: "Unlimited Hug Coupon",
+        tier: "unlimited",
+        description: "For every happy day, sad day, sleepy day, or random moment that needs a hug.",
+        tags: ["hug", "comfort", "blue", "unlimited"]
+      },
+      {
+        id: "unlimited-gossip",
+        code: "BLUE-003",
+        title: "Unlimited Gossip Session",
+        tier: "unlimited",
+        description: "Tea, secrets, drama, tiny details, and full attention from me.",
+        tags: ["gossip", "talk", "blue", "unlimited"]
+      },
+      {
+        id: "pink-long-call",
+        code: "PINK-001",
+        title: "Long Call Coupon",
+        tier: "pink",
+        maxUses: 5,
+        description: "For slow calls, soft talks, random stories, and staying a little longer together.",
+        tags: ["call", "talk", "pink", "5 uses"]
+      }
+    ];
+
+    const tierConfig = {
+      unlimited: { label: "Unlimited", max: Infinity, order: 1 },
+      "one-use": { label: "Red Uses", max: 1, order: 2 },
+      pink: { label: "Pink Uses", max: 5, order: 3 },
+      "ten-times": { label: "10 Times", max: 10, order: 4 }
+    };
+    const storageKey = "loveCouponUsageV2";
+
+    const state = {
+      coupons: [],
+      tier: "all",
+      query: "",
+      sort: "featured",
+      status: "all",
+      used: loadUsage()
+    };
+
+    const grid = document.querySelector("#couponGrid");
+    const empty = document.querySelector("#emptyState");
+    const resultCount = document.querySelector("#resultCount");
+    const searchInput = document.querySelector("#searchInput");
+    const sortSelect = document.querySelector("#sortSelect");
+    const statusSelect = document.querySelector("#statusSelect");
+    const tierTabs = [...document.querySelectorAll(".tier-tab")];
+    const spotlightTicket = document.querySelector("#spotlightTicket");
+    const controlsShell = document.querySelector(".controls-shell");
+    const filterToggle = document.querySelector("#filterToggle");
+    let searchMenuOpen = false;
+
+    init();
+
+    async function init() {
+      state.coupons = await loadCoupons();
+      renderSpotlight();
+      bindEvents();
+      render();
+      window.setInterval(renderSpotlight, 5000);
+    }
+
+    async function loadCoupons() {
+      try {
+        const response = await fetch("coupons.json", { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error("Coupon JSON was not found.");
+        }
+        return await response.json();
+      } catch (error) {
+        return fallbackCoupons;
+      }
+    }
+
+    function bindEvents() {
+      filterToggle.addEventListener("click", () => {
+        if (searchMenuOpen) {
+          closeSearchMenu();
+        } else {
+          openSearchMenu();
+        }
+      });
+
+      document.addEventListener("pointerdown", (event) => {
+        if (searchMenuOpen && !controlsShell.contains(event.target)) {
+          closeSearchMenu();
+        }
+      });
+
+      window.addEventListener("popstate", () => {
+        if (searchMenuOpen) {
+          closeSearchMenu({ fromPop: true });
+        }
+      });
+
+      window.addEventListener("resize", () => {
+        renderSpotlight();
+      });
+
+      searchInput.addEventListener("input", (event) => {
+        state.query = event.target.value.trim().toLowerCase();
+        render();
+      });
+
+      sortSelect.addEventListener("change", (event) => {
+        state.sort = event.target.value;
+        render();
+      });
+
+      statusSelect.addEventListener("change", (event) => {
+        state.status = event.target.value;
+        render();
+      });
+
+      tierTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          state.tier = tab.dataset.tier;
+          tierTabs.forEach((item) => item.classList.toggle("active", item === tab));
+          render();
+        });
+      });
+
+      grid.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-use]");
+        if (!button) {
+          return;
+        }
+
+        const id = button.dataset.use;
+        const coupon = state.coupons.find((item) => item.id === id);
+        if (!coupon || getRemaining(coupon) === 0) {
+          return;
+        }
+
+        if (coupon.tier !== "unlimited") {
+          state.used[id] = (state.used[id] || 0) + 1;
+          saveUsage();
+          render();
+        }
+      });
+    }
+
+    function render() {
+      const coupons = sortCoupons(filterCoupons(state.coupons));
+      grid.innerHTML = coupons.map((coupon, index) => couponTemplate(coupon, index)).join("");
+      empty.classList.toggle("show", coupons.length === 0);
+      resultCount.textContent = `${coupons.length} ${coupons.length === 1 ? "coupon" : "coupons"}`;
+    }
+
+    function filterCoupons(coupons) {
+      return coupons.filter((coupon) => {
+        const matchesTier = state.tier === "all" || coupon.tier === state.tier;
+        const haystack = [coupon.title, coupon.code, coupon.tier, coupon.maxUses, coupon.description, ...(coupon.tags || [])]
+          .join(" ")
+          .toLowerCase();
+        const matchesQuery = !state.query || haystack.includes(state.query);
+        const remaining = getRemaining(coupon);
+        const matchesStatus =
+          state.status === "all" ||
+          (state.status === "available" && remaining !== 0) ||
+          (state.status === "used" && remaining === 0);
+
+        return matchesTier && matchesQuery && matchesStatus;
+      });
+    }
+
+    function sortCoupons(coupons) {
+      return [...coupons].sort((a, b) => {
+        if (state.sort === "tier") {
+          return tierConfig[a.tier].order - tierConfig[b.tier].order || a.title.localeCompare(b.title);
+        }
+
+        if (state.sort === "title") {
+          return a.title.localeCompare(b.title);
+        }
+
+        if (state.sort === "remaining") {
+          return scoreRemaining(b) - scoreRemaining(a) || a.title.localeCompare(b.title);
+        }
+
+        return 0;
+      });
+    }
+
+    function couponTemplate(coupon, index) {
+      const remaining = getRemaining(coupon);
+      const tier = tierConfig[coupon.tier] || tierConfig.unlimited;
+      const maxUses = getMaxUses(coupon);
+      const isUnlimited = coupon.tier === "unlimited";
+      const usedText = isUnlimited ? "Always available" : `${remaining} of ${maxUses} left`;
+      const disabled = remaining === 0 ? "disabled" : "";
+      const buttonText = isUnlimited ? "Always Yours" : remaining === 0 ? "Used Up" : "Use";
+      const tags = (coupon.tags || []).slice(0, 3).map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("");
+
+      return `
+        <article class="coupon-card ${coupon.tier}" style="animation-delay: ${Math.min(index * 0.05, 0.35)}s">
+          <div class="coupon-top">
+            <span class="code">${escapeHtml(coupon.code)}</span>
+            <span class="tier-pill ${coupon.tier}">${tierDisplayLabel(coupon)}</span>
+          </div>
+          <div class="coupon-body">
+            <h3 class="coupon-title">${escapeHtml(coupon.title)}</h3>
+            <p class="coupon-description">${escapeHtml(coupon.description)}</p>
+            <div class="meta">${tags}</div>
+          </div>
+          <div class="coupon-actions">
+            <div class="remaining">${usedText}</div>
+            <button class="use-button" type="button" data-use="${escapeHtml(coupon.id)}" ${disabled}>${buttonText}</button>
+          </div>
+        </article>
+      `;
+    }
+
+    function getRemaining(coupon) {
+      const max = getMaxUses(coupon);
+      if (max === Infinity) {
+        return Infinity;
+      }
+      return Math.max(max - (state.used[coupon.id] || 0), 0);
+    }
+
+    function getMaxUses(coupon) {
+      if (coupon.tier === "unlimited") {
+        return Infinity;
+      }
+
+      const fallbackMax = (tierConfig[coupon.tier] || tierConfig["one-use"]).max;
+      const customMax = Number(coupon.maxUses);
+      return Number.isFinite(customMax) && customMax > 0 ? customMax : fallbackMax;
+    }
+
+    function tierDisplayLabel(coupon) {
+      const maxUses = getMaxUses(coupon);
+
+      if (coupon.tier === "unlimited") {
+        return "Unlimited";
+      }
+
+      if (coupon.tier === "ten-times") {
+        return `${maxUses} Times`;
+      }
+
+      return `${maxUses} ${maxUses === 1 ? "Use" : "Uses"}`;
+    }
+
+    function renderSpotlight() {
+      if (!spotlightTicket || state.coupons.length === 0) {
+        return;
+      }
+
+      const count = window.matchMedia("(max-width: 640px)").matches ? 2 : 3;
+      const shuffled = [...state.coupons].sort(() => Math.random() - 0.5).slice(0, count);
+
+      spotlightTicket.innerHTML = shuffled.map((coupon) => {
+        const miniClass = coupon.tier === "unlimited"
+          ? "blue"
+          : coupon.tier === "one-use"
+            ? "red"
+            : coupon.tier === "pink"
+              ? "pink"
+              : "white";
+
+        return `
+          <div class="mini-ticket ${miniClass}">
+            <strong>${escapeHtml(coupon.title)}</strong>
+            <span>${escapeHtml(coupon.code)} · ${escapeHtml(tierDisplayLabel(coupon))}</span>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function openSearchMenu() {
+      if (searchMenuOpen) {
+        return;
+      }
+
+      searchMenuOpen = true;
+      controlsShell.classList.add("open");
+      filterToggle.setAttribute("aria-expanded", "true");
+      history.pushState({ couponSearchOpen: true }, "");
+    }
+
+    function closeSearchMenu(options = {}) {
+      if (!searchMenuOpen) {
+        return;
+      }
+
+      searchMenuOpen = false;
+      controlsShell.classList.remove("open");
+      filterToggle.setAttribute("aria-expanded", "false");
+
+      if (!options.fromPop && history.state && history.state.couponSearchOpen) {
+        history.back();
+      }
+    }
+
+    function scoreRemaining(coupon) {
+      const remaining = getRemaining(coupon);
+      return remaining === Infinity ? 999 : remaining;
+    }
+
+    function loadUsage() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey) || "{}");
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function saveUsage() {
+      localStorage.setItem(storageKey, JSON.stringify(state.used));
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+  </script>
+</body>
+</html>

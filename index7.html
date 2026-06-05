@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy 18th Birthday My Love 💙</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   GLOBAL STYLES
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+:root{
+    --bg1:#dfefff;
+    --bg2:#b8d8ff;
+    --bg3:#edf6ff;
+    --blue:#5ba8ff;
+    --dark:#16324f;
+    --glass:rgba(255,255,255,0.18);
+    --border:rgba(255,255,255,0.3);
+    --shadow:0 8px 32px rgba(31,38,135,0.15);
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+    overflow-x:hidden;
+    color:var(--dark);
+    min-height:100vh;
+    position:relative;
+}
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+#loader{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(135deg,#dcecff,#bddbff);
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    transition:1s ease;
+}
+
+.loader-heart{
+    font-size:70px;
+    animation:pulse 1.5s infinite;
+}
+
+.loader-text{
+    margin-top:15px;
+    font-size:18px;
+    color:#255;
+    letter-spacing:2px;
+}
+
+@keyframes pulse{
+    0%,100%{
+        transform:scale(1);
+        opacity:1;
+    }
+    50%{
+        transform:scale(1.2);
+        opacity:0.7;
+    }
+}
+
+/* =========================================================
+   FLOATING PETALS
+========================================================= */
+
+.petals{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-1;
+}
+
+.petal{
+    position:absolute;
+    width:20px;
+    height:20px;
+    background:rgba(255,255,255,0.8);
+    border-radius: 0% 70% 0% 70%;
+    opacity:0.7;
+    animation:fall linear infinite;
+    will-change:transform;
+}
+
+@keyframes fall{
+    0%{
+        transform:translateY(-10vh) rotate(0deg);
+    }
+    100%{
+        transform:translateY(110vh) rotate(360deg);
+    }
+}
+
+/* =========================================================
+   GENERAL SECTIONS
+========================================================= */
+
+section{
+    padding:clamp(60px, 12vw, 100px) clamp(20px, 6vw, 10%);
+    position:relative;
+}
+
+.glass{
+    background:var(--glass);
+    backdrop-filter:blur(6px);
+    border:1px solid var(--border);
+    box-shadow:0 4px 16px rgba(31,38,135,0.08);
+    border-radius:28px;
+}
+
+/* =========================================================
+   NAV / MUSIC BUTTON
+========================================================= */
+
+.music-btn{
+    position:fixed;
+    top:20px;
+    right:20px;
+    z-index:999;
+    border:none;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(6px);
+    color:#123;
+    padding:14px 18px;
+    border-radius:50px;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
+    box-shadow:0 2px 8px rgba(31,38,135,0.08);
+}
+
+.music-btn:hover{
+    transform:translateY(-3px) scale(1.05);
+    background:white;
+}
+
+/* =========================================================
+   HERO SECTION
+========================================================= */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+
+.hero-card{
+    padding:clamp(40px, 8vw, 60px);
+    max-width:900px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero h1{
+    font-size:clamp(2.2rem, 6vw, 4rem);
+    line-height:1.2;
+    color:#0a1b2e;
+    text-shadow:0 0 8px rgba(255,255,255,0.3);
+    margin-bottom:20px;
+    font-weight:700;
+}
+
+.hero .script{
+    font-family:'Great Vibes',cursive;
+    font-size:clamp(1.6rem, 4vw, 2.6rem);
+    color:#2f6bbf;
+    margin-bottom:20px;
+    font-weight:400;
+}
+
+.hero p{
+    font-size:clamp(1rem, 2.2vw, 1.15rem);
+    line-height:1.85;
+    color:#1a2d42;
+    max-width:700px;
+    margin:auto;
+    font-weight:400;
+}
+
+.glow{
+    position:absolute;
+    width:250px;
+    height:250px;
+    background:rgba(120,180,255,0.2);
+    filter:blur(60px);
+    border-radius:50%;
+    animation:float 10s ease-in-out infinite;
+}
+
+.glow.one{
+    top:-60px;
+    left:-60px;
+}
+
+.glow.two{
+    bottom:-80px;
+    right:-60px;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0px);
+    }
+    50%{
+        transform:translateY(20px);
+    }
+}
+
+/* =========================================================
+   FLOWER SVG DECORATION
+========================================================= */
+
+.flower{
+    position:absolute;
+    width:120px;
+    opacity:0.15;
+}
+
+.flower.top-left{
+    top:-20px;
+    left:-20px;
+}
+
+.flower.bottom-right{
+    bottom:-20px;
+    right:-20px;
+    transform:rotate(180deg);
+}
+
+/* =========================================================
+   MESSAGE SECTION
+========================================================= */
+
+.message-container{
+    max-width:1000px;
+    margin:auto;
+    padding:clamp(40px, 8vw, 60px);
+}
+
+.section-title{
+    text-align:center;
+    font-size:clamp(1.8rem, 5vw, 2.5rem);
+    margin-bottom:40px;
+    color:#0a1b2e;
+    font-weight:700;
+    letter-spacing:0.5px;
+}
+
+.message{
+    font-size:clamp(1rem, 2vw, 1.12rem);
+    line-height:1.95;
+    color:#1a2d42;
+    text-align:center;
+    font-weight:400;
+}
+
+/* =========================================================
+   NOTES SECTION
+========================================================= */
+
+.notes-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:clamp(18px, 3vw, 28px);
+    margin-top:50px;
+}
+
+.note-card{
+    padding:clamp(24px, 5vw, 32px);
+    transition:0.3s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+.note-card:hover{
+    /* Disabled expensive hover for performance */
+    box-shadow:0 4px 12px rgba(31,38,135,0.08);
+}
+
+.note-card h3{
+    margin-bottom:15px;
+    color:#0a1b2e;
+    font-size:clamp(1rem, 2.5vw, 1.15rem);
+    font-weight:600;
+}
+
+.note-card p{
+    line-height:1.7;
+    color:#1a2d42;
+    font-size:clamp(0.95rem, 1.8vw, 1.05rem);
+}
+
+/* =========================================================
+   FINAL SECTION
+========================================================= */
+
+.final{
+    text-align:center;
+}
+
+.final-card{
+    padding:clamp(50px, 10vw, 70px) clamp(30px, 8vw, 40px);
+    position:relative;
+    overflow:hidden;
+}
+
+.final h2{
+    font-size:clamp(2rem, 5.5vw, 3rem);
+    margin-bottom:20px;
+    color:#0a1b2e;
+    animation:shine 5s infinite;
+    text-shadow:0 0 10px rgba(255,255,255,0.2);
+    font-weight:700;
+}
+
+@keyframes shine{
+    0%{
+        text-shadow:0 0 10px rgba(255,255,255,0.2);
+    }
+    50%{
+        text-shadow:0 0 15px rgba(120,180,255,0.5);
+    }
+    100%{
+        text-shadow:0 0 10px rgba(255,255,255,0.2);
+    }
+}
+
+.final p{
+    font-size:clamp(1rem, 2.1vw, 1.12rem);
+    line-height:1.9;
+    color:#1a2d42;
+    font-weight:400;
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.btn{
+    display:inline-block;
+    margin-top:35px;
+    padding:16px 36px;
+    border-radius:50px;
+    text-decoration:none;
+    color:white;
+    background:linear-gradient(135deg,#4e95ff,#7ab8ff);
+    transition:0.3s ease;
+    font-weight:600;
+    font-size:clamp(0.95rem, 1.8vw, 1.05rem);
+    box-shadow:0 6px 20px rgba(90,140,255,0.3);
+    border:none;
+}
+
+.btn:hover{
+    /* Disabled expensive hover for performance */
+    opacity:0.95;
+    box-shadow:0 8px 25px rgba(90,140,255,0.4);
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+    text-align:center;
+    padding:40px 20px;
+    color:#0a1b2e;
+    font-size:clamp(0.95rem, 1.8vw, 1.05rem);
+    font-weight:500;
+}
+
+/* =========================================================
+   FLOATING HEARTS
+========================================================= */
+
+.heart{
+    position:fixed;
+    bottom:-20px;
+    color:rgba(255,255,255,0.7);
+    animation:floatHeart linear forwards;
+    pointer-events:none;
+    z-index:-1;
+}
+
+@keyframes floatHeart{
+    from{
+        transform:translateY(0) scale(1);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-120vh) scale(1.8);
+        opacity:0;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+.scrolling .petal,
+.scrolling .glow,
+.scrolling .float,
+.scrolling .pulse,
+.scrolling .shine,
+.scrolling .heart{
+    animation-play-state:paused !important;
+}
+
+.near-bottom #petals{ display:none !important; }
+.near-bottom .glow,
+.near-bottom .heart,
+.near-bottom .petal{
+    animation-play-state:paused !important;
+}
+
+@media(max-width:900px){
+    .glass{
+        backdrop-filter:none !important;
+        -webkit-backdrop-filter:none !important;
+        background:rgba(255,255,255,0.08) !important;
+    }
+    .music-btn{
+        backdrop-filter:none !important;
+        -webkit-backdrop-filter:none !important;
+    }
+    .glow{ display:none !important; }
+}
+
+@media(max-width:768px){
+    section{
+        padding:clamp(50px, 10vw, 80px) clamp(16px, 5vw, 24px);
+    }
+    
+    .hero-card,
+    .message-container,
+    .final-card{
+        padding:clamp(30px, 6vw, 45px);
+    }
+
+    .btn{
+        padding:14px 28px;
+        margin-top:25px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ======================================================
+     LOADING SCREEN
+====================================================== -->
+
+<div id="loader">
+    <div class="loader-heart">💙</div>
+    <div class="loader-text">Loading Your Dreamy Surprise...</div>
+</div>
+
+<!-- ======================================================
+     MUSIC BUTTON
+====================================================== -->
+
+<!-- <button class="music-btn" id="musicToggle">🎵 Music</button> -->
+
+<!-- ======================================================
+     OPTIONAL MUSIC
+     Replace this MP3 link with your own if needed
+====================================================== -->
+
+<audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4f4f6b3f2d.mp3?filename=romantic-background-112191.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ======================================================
+     PETALS CONTAINER
+====================================================== -->
+
+<div class="petals" id="petals"></div>
+
+<!-- ======================================================
+     HERO SECTION
+====================================================== -->
+
+<section class="hero">
+
+    <div class="hero-card glass">
+
+        <div class="glow one"></div>
+        <div class="glow two"></div>
+
+        <!-- Decorative Flower SVG -->
+        <svg class="flower top-left" viewBox="0 0 200 200">
+            <path fill="#6caeff" d="M47.1,-58.8C59.8,-46.3,68.3,-30,71.8,-12.5C75.2,5,73.6,23.7,64.9,37.3C56.1,50.8,40.2,59.2,23.6,66.1C7.1,73,-10.1,78.3,-24.5,73.2C-38.9,68.1,-50.6,52.7,-61.8,36.6C-73,20.6,-83.7,3.9,-81.2,-11.1C-78.8,-26.2,-63.3,-39.5,-47.4,-51.4C-31.4,-63.3,-15.7,-73.8,0.9,-74.9C17.5,-76,34.9,-67.4,47.1,-58.8Z"/>
+        </svg>
+
+        <svg class="flower bottom-right" viewBox="0 0 200 200">
+            <path fill="#6caeff" d="M47.1,-58.8C59.8,-46.3,68.3,-30,71.8,-12.5C75.2,5,73.6,23.7,64.9,37.3C56.1,50.8,40.2,59.2,23.6,66.1C7.1,73,-10.1,78.3,-24.5,73.2C-38.9,68.1,-50.6,52.7,-61.8,36.6C-73,20.6,-83.7,3.9,-81.2,-11.1C-78.8,-26.2,-63.3,-39.5,-47.4,-51.4C-31.4,-63.3,-15.7,-73.8,0.9,-74.9C17.5,-76,34.9,-67.4,47.1,-58.8Z"/>
+        </svg>
+
+        <div class="script">For The Most Beautiful Soul</div>
+
+        <h1>Happy 18th Birthday Jaanu 💙</h1>
+
+        <p>
+            Today is not just another birthday — it’s the beginning of a beautiful new chapter in your life. 
+            You deserve every smile, every soft moment, every dream coming true, and every bit of happiness in this world.
+        </p>
+
+        <a href="#message" class="btn">Read My Heart 💙</a>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     MAIN MESSAGE
+====================================================== -->
+
+<section id="message">
+
+    <div class="message-container glass">
+
+        <h2 class="section-title">A Message From My Heart</h2>
+
+        <p class="message">
+            Happy 18th birthday to the most precious person in my life. 💙  
+            Honestly, words never feel enough when it comes to describing how much you mean to me. 
+            You entered my life and slowly turned ordinary days into memories I never want to lose. 
+            Your smile brings comfort to my heart, your voice feels like peace after a long day, 
+            and your presence alone makes everything feel lighter and more beautiful.
+            <br><br>
+
+            Watching you grow into such an amazing person makes me incredibly proud. 
+            You are kind, beautiful, caring, strong, and genuinely special in ways that even you probably don’t realize. 
+            I hope this new chapter of your life brings endless happiness, success, unforgettable memories, and moments that make your heart feel full.
+            <br><br>
+
+            Thank you for being there, for understanding me, for making me laugh, and for giving my world so much color. 
+            Every conversation with you becomes a favorite memory, and every moment spent together feels magical in its own little way.
+            <br><br>
+
+            I truly hope life gives us more beautiful moments together — more late-night talks, more laughter, more dreams, 
+            and more memories we’ll look back on with happy hearts someday. 
+            No matter what happens, I just want you to remember that you are deeply loved, appreciated, and cherished.
+            <br><br>
+
+            On your 18th birthday, I wish for your smile to never fade, for your dreams to become reality, 
+            and for your heart to always stay as beautiful as it is today. 
+            You deserve the entire universe and so much more.
+            <br><br>
+
+            Happy Birthday once again, my love. 💙
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     CUTE NOTES SECTION
+====================================================== -->
+
+<section>
+
+    <h2 class="section-title">Little Things I Love About You ✨</h2>
+
+    <div class="notes-grid">
+
+        <div class="note-card glass">
+            <h3>💙 Brightest Light</h3>
+            <p>You make my world brighter even on the darkest days.</p>
+        </div>
+
+        <div class="note-card glass">
+            <h3>✨ Magical Moments</h3>
+            <p>Every moment with you feels magical and unforgettable.</p>
+        </div>
+
+        <div class="note-card glass">
+            <h3>🌸 Softest Comfort</h3>
+            <p>Your presence feels like peace, warmth, and home all at once.</p>
+        </div>
+
+        <div class="note-card glass">
+            <h3>💫 Beautiful Soul</h3>
+            <p>Your heart is genuinely one of the most beautiful things I’ve ever known.</p>
+        </div>
+
+        <div class="note-card glass">
+            <h3>🌙 Forever Favorite</h3>
+            <p>No matter how many memories we make, you’ll always be my favorite one.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     FINAL SECTION
+====================================================== -->
+
+<section class="final">
+
+    <div class="final-card glass">
+
+        <div class="glow one"></div>
+        <div class="glow two"></div>
+
+        <h2>Happy 18th Birthday Once Again 💙</h2>
+
+        <p>
+            May your smile always shine brighter than the stars,  
+            may your dreams always find their way to reality,  
+            and may your heart always stay as soft and beautiful as it is today.
+            <br><br>
+            Thank you for existing. 🌸
+        </p>
+
+        <a href="#" class="btn">Forever Yours 💙</a>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+    Made by your loving bf Arko 💙
+</footer>
+
+<!-- ======================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script>
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+window.addEventListener("load", () => {
+
+    setTimeout(() => {
+        document.getElementById("loader").style.opacity = "0";
+
+        setTimeout(() => {
+            document.getElementById("loader").style.display = "none";
+        }, 800);
+
+    }, 1200);
+
+});
+
+/* =========================================================
+   FLOATING PETALS (reduced count for performance)
+========================================================= */
+
+const petalsContainer = document.getElementById("petals");
+
+for(let i = 0; i < 4; i++){
+
+    const petal = document.createElement("div");
+    petal.classList.add("petal");
+
+    petal.style.left = Math.random() * 100 + "vw";
+    petal.style.animationDuration = (Math.random() * 8 + 14) + "s";
+    petal.style.opacity = Math.random() * 0.6 + 0.4;
+    petal.style.width = petal.style.height = (Math.random() * 12 + 8) + "px";
+
+    petalsContainer.appendChild(petal);
+}
+
+/* =========================================================
+   FLOATING HEARTS (DISABLED for performance - was spawning every 900ms)
+========================================================= */
+
+// Disabled to improve scroll performance
+// function createHeart(){
+//     const heart = document.createElement("div");
+//     heart.classList.add("heart");
+//     heart.innerHTML = "💙";
+//     heart.style.left = Math.random() * 100 + "vw";
+//     heart.style.fontSize = (Math.random() * 18 + 14) + "px";
+//     heart.style.animationDuration = (Math.random() * 4 + 5) + "s";
+//     document.body.appendChild(heart);
+//     setTimeout(() => { heart.remove(); }, 8000);
+// }
+// setInterval(createHeart, 900);
+
+/* =========================================================
+   MUSIC TOGGLE
+========================================================= */
+
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicToggle");
+
+let isPlaying = false;
+
+musicBtn.addEventListener("click", () => {
+
+    if(!isPlaying){
+        music.play();
+        musicBtn.innerHTML = "⏸ Pause";
+        isPlaying = true;
+    }
+    else{
+        music.pause();
+        musicBtn.innerHTML = "🎵 Music";
+        isPlaying = false;
+    }
+
+});
+
+/* =========================================================
+   SCROLL PAUSE (reduce lag while scrolling)
+========================================================= */
+
+(function(){
+    let scrollTimer = null;
+    const SCROLL_PAUSE_MS = 160;
+    function onScroll(){
+        document.documentElement.classList.add('scrolling');
+        if(scrollTimer) clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(()=>{
+            document.documentElement.classList.remove('scrolling');
+            scrollTimer = null;
+        }, SCROLL_PAUSE_MS);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+})();
+
+/* =========================================================
+   NEAR-BOTTOM DETECTION & ANIMATION PAUSE
+========================================================= */
+
+(function(){
+    try{
+        const sentinel = document.createElement('div');
+        sentinel.id = 'bottom-sentinel';
+        sentinel.style.width = '100%';
+        sentinel.style.height = '1px';
+        sentinel.style.display = 'block';
+        document.body.appendChild(sentinel);
+
+        let ticking = false;
+        function checkNearBottom(){
+            ticking = false;
+            const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+            const vh = window.innerHeight || document.documentElement.clientHeight;
+            const docH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+            const distanceFromBottom = docH - (scrollY + vh);
+            // If within 400px of bottom, disable petals and animations
+            if(distanceFromBottom <= 400){
+                if(!document.documentElement.classList.contains('near-bottom')){
+                    document.documentElement.classList.add('near-bottom');
+                }
+            }else{
+                if(document.documentElement.classList.contains('near-bottom')){
+                    document.documentElement.classList.remove('near-bottom');
+                }
+            }
+        }
+        function onScrollForBottom(){
+            if(!ticking){
+                window.requestAnimationFrame(checkNearBottom);
+                ticking = true;
+            }
+        }
+        window.addEventListener('scroll', onScrollForBottom, { passive: true });
+        window.addEventListener('resize', onScrollForBottom, { passive: true });
+    }catch(err){
+        console.warn('near-bottom detection failed', err);
+    }
+})();
+
+</script>
+
+</body>
+</html>

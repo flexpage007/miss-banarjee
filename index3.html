@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy 18th Birthday My Love 💙</title>
+
+  <!-- Google Fonts: Cormorant Garamond (elegant serif) + Inter (clean sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       CSS CUSTOM PROPERTIES (easy to edit colors)
+    ============================================= */
+    :root {
+      --blue-deep:    #1a3a5c;
+      --blue-mid:     #2563a8;
+      --blue-soft:    #6ea8d8;
+      --blue-pale:    #c3dcf5;
+      --blue-ghost:   #e8f3fc;
+      --white:        #ffffff;
+      --petal-1:      #b8d9f5;
+      --petal-2:      #d6ecff;
+      --petal-3:      #e8c9f0;
+      --glass-bg:     rgba(255, 255, 255, 0.18);
+      --glass-border: rgba(255, 255, 255, 0.35);
+      --text-dark:    #1a2d42;
+      --text-mid:     #3a5a7a;
+      --text-soft:    #6a90b0;
+    }
+
+    /* =============================================
+       RESET & BASE
+    ============================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0d2137 0%, #1a3a5c 30%, #1e4d73 60%, #163352 100%);
+      min-height: 100vh;
+      color: var(--text-dark);
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+
+    /* =============================================
+       LOADING SCREEN
+    ============================================= */
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: linear-gradient(135deg, #0a1a2e, #1a3a5c, #0e2540);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    #loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-flower {
+      width: 64px;
+      height: 64px;
+      position: relative;
+      animation: loaderSpin 2s linear infinite;
+      margin-bottom: 24px;
+    }
+
+    .loader-petal {
+      position: absolute;
+      width: 18px;
+      height: 32px;
+      background: linear-gradient(180deg, var(--blue-pale), var(--blue-soft));
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      top: 50%;
+      left: 50%;
+      transform-origin: 50% 100%;
+      opacity: 0.85;
+    }
+
+    /* 8 petals evenly spaced */
+    .loader-petal:nth-child(1) { transform: translateX(-50%) rotate(0deg)   translateY(-100%); }
+    .loader-petal:nth-child(2) { transform: translateX(-50%) rotate(45deg)  translateY(-100%); }
+    .loader-petal:nth-child(3) { transform: translateX(-50%) rotate(90deg)  translateY(-100%); }
+    .loader-petal:nth-child(4) { transform: translateX(-50%) rotate(135deg) translateY(-100%); }
+    .loader-petal:nth-child(5) { transform: translateX(-50%) rotate(180deg) translateY(-100%); }
+    .loader-petal:nth-child(6) { transform: translateX(-50%) rotate(225deg) translateY(-100%); }
+    .loader-petal:nth-child(7) { transform: translateX(-50%) rotate(270deg) translateY(-100%); }
+    .loader-petal:nth-child(8) { transform: translateX(-50%) rotate(315deg) translateY(-100%); }
+
+    .loader-text {
+      color: var(--blue-pale);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      letter-spacing: 0.15em;
+      animation: loaderPulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes loaderSpin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes loaderPulse {
+      0%, 100% { opacity: 0.5; }
+      50%       { opacity: 1; }
+    }
+
+    /* =============================================
+       FLOATING PETALS — CSS (performance optimized)
+    ============================================= */
+    .petals-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      font-size: 1.4rem;
+      opacity: 0.78;
+      will-change: transform;
+      transform: translate3d(0, -10vh, 0);
+      animation: fallPetal linear infinite;
+      -webkit-transform: translate3d(0, -10vh, 0);
+    }
+
+    @keyframes fallPetal {
+      from { transform: translate3d(0, -12vh, 0) rotate(0deg); opacity: 0.9; }
+      to   { transform: translate3d(0, 110vh, 0) rotate(360deg); opacity: 0; }
+    }
+
+    /* Per-petal timing variations (few petals for low cost) */
+    .petal:nth-child(1) { left: 6%;  animation-duration: 18s; animation-delay: 0s;  }
+    .petal:nth-child(2) { left: 24%; animation-duration: 20s; animation-delay: 2s;  }
+    .petal:nth-child(3) { left: 42%; animation-duration: 22s; animation-delay: 1s;  }
+    .petal:nth-child(4) { left: 60%; animation-duration: 19s; animation-delay: 3s;  }
+    .petal:nth-child(5) { left: 78%; animation-duration: 21s; animation-delay: 0.8s; }
+    .petal:nth-child(6) { left: 88%; animation-duration: 23s; animation-delay: 2.4s; }
+
+    /* hide original canvas (was expensive) */
+    #petals-canvas { display: none; }
+
+    /* =============================================
+       MUSIC TOGGLE BUTTON
+    ============================================= */
+    #music-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 1000;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+      color: var(--white);
+    }
+
+    #music-btn:hover {
+      transform: scale(1.12);
+      background: rgba(255, 255, 255, 0.28);
+      box-shadow: 0 4px 28px rgba(100, 168, 216, 0.5);
+    }
+
+    #music-btn.playing {
+      animation: musicPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes musicPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(100, 168, 216, 0.4); }
+      50%       { box-shadow: 0 0 0 12px rgba(100, 168, 216, 0); }
+    }
+
+    /* =============================================
+       PAGE WRAPPER
+    ============================================= */
+    #page {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    #page.visible {
+      opacity: 1;
+    }
+
+    /* =============================================
+       SECTION BASE STYLES
+    ============================================= */
+    section {
+      padding: 80px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .container {
+      max-width: 780px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* =============================================
+       GLASSMORPHISM CARD
+    ============================================= */
+    .glass-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 24px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    /* =============================================
+       SECTION DIVIDER
+    ============================================= */
+    .divider {
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--blue-soft), transparent);
+      margin: 24px auto;
+      border-radius: 2px;
+    }
+
+    .flower-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 32px 0;
+      width: 100%;
+    }
+
+    .flower-divider::before,
+    .flower-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(195,220,245,0.4), transparent);
+    }
+
+    .flower-divider svg {
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+
+    /* =============================================
+       SCROLL REVEAL ANIMATION
+    ============================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =============================================
+       ① HERO SECTION
+    ============================================= */
+    #hero {
+      min-height: 100vh;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px;
+    }
+
+    /* Stars background dots */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 25%, rgba(195,220,245,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 40% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 70% 18%, rgba(195,220,245,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 40%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 70%, rgba(195,220,245,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 25% 80%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 90%, rgba(195,220,245,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5%  60%, rgba(255,255,255,0.3) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Decorative flower SVG wreath ring */
+    .hero-wreath {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(520px, 90vw);
+      height: min(520px, 90vw);
+      pointer-events: none;
+      opacity: 0.10;
+      max-width: 100vw;
+      max-height: 100vh;
+      animation: wreathSpin 180s linear infinite;
+    }
+
+    @keyframes wreathSpin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Pause wreath on scroll and near-bottom */
+    .scrolling .hero-wreath {
+      animation-play-state: paused !important;
+    }
+
+    .near-bottom .hero-wreath {
+      animation-play-state: paused !important;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 100px;
+      padding: 8px 22px;
+      color: var(--blue-pale);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      animation: fadeInDown 1s ease 0.5s both;
+    }
+
+    .hero-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 18px rgba(100, 168, 216, 0.3);
+      animation: fadeInUp 1s ease 0.7s both;
+    }
+
+    .hero-heading .heart-glow {
+      color: var(--blue-pale);
+      text-shadow: 0 0 10px rgba(195, 220, 245, 0.4);
+    }
+
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+      font-style: italic;
+      color: rgba(195, 220, 245, 0.85);
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+      animation: fadeInUp 1s ease 0.9s both;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 14px 36px;
+      border-radius: 100px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+      border: 1.5px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(10px);
+      color: var(--white);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: fadeInUp 1s ease 1.1s both;
+    }
+
+    .hero-cta:hover {
+      background: rgba(255,255,255,0.22);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(100, 168, 216, 0.35);
+    }
+
+    /* Animated glow ring around the date number */
+    .hero-date-bubble {
+      width: min(160px, 40vw);
+      height: min(160px, 40vw);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(100, 168, 216, 0.25) 0%, transparent 70%);
+      border: 1.5px solid rgba(195, 220, 245, 0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 48px auto 0;
+      animation: glowPulse 3s ease-in-out infinite, fadeInUp 1s ease 1.3s both;
+    }
+
+    .hero-date-bubble .num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 7vw, 4.5rem);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .hero-date-bubble .label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--blue-pale);
+      margin-top: 2px;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(100, 168, 216, 0.15);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(100, 168, 216, 0.25);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =============================================
+       ② MAIN MESSAGE SECTION
+    ============================================= */
+    #message {
+      padding-top: 40px;
+    }
+
+    .section-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--blue-soft);
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+      font-weight: 600;
+      color: var(--white);
+      text-align: center;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .message-card {
+      padding: 48px 44px;
+      margin-top: 32px;
+    }
+
+    .message-card p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      line-height: 1.95;
+      color: rgba(232, 243, 252, 0.92);
+      font-weight: 300;
+    }
+
+    .message-card p + p {
+      margin-top: 20px;
+    }
+
+    .message-card .salutation {
+      font-style: italic;
+      font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+      color: var(--blue-pale);
+      margin-bottom: 24px;
+    }
+
+    .message-card .sign-off {
+      font-style: italic;
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      color: var(--blue-pale);
+      margin-top: 32px;
+      text-align: right;
+    }
+
+    @media (max-width: 600px) {
+      .message-card {
+        padding: 32px 24px;
+      }
+    }
+
+    /* =============================================
+       ③ MEMORY / NOTES CARDS
+    ============================================= */
+    #notes {
+      padding-bottom: 60px;
+    }
+
+    .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+      width: 100%;
+    }
+
+    .note-card {
+      padding: 32px 28px;
+      text-align: center;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .note-card::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: -40%;
+      width: 80%;
+      height: 80%;
+      background: radial-gradient(circle, rgba(195,220,245,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .note-card:hover {
+      /* Disabled hover transform for better scroll performance */
+      /* transform: translateY(-8px) scale(1.02); */
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+
+    .note-card .note-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .note-card .note-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: rgba(232, 243, 252, 0.9);
+      line-height: 1.6;
+    }
+
+    .note-card .note-caption {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue-soft);
+      margin-top: 12px;
+    }
+
+    /* =============================================
+       ④ FINAL WISH SECTION
+    ============================================= */
+    #final {
+      padding: 60px 24px 80px;
+      text-align: center;
+    }
+
+    .final-glow-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.3;
+      text-shadow: 0 0 8px rgba(195,220,245,0.25);
+      animation: textGlow 8s ease-in-out infinite;
+      max-width: 640px;
+      margin: 0 auto 28px;
+    }
+
+    @keyframes textGlow {
+      0%, 100% {
+        text-shadow: 0 0 8px rgba(195,220,245,0.25);
+      }
+      50% {
+        text-shadow: 0 0 16px rgba(195,220,245,0.35);
+      }
+    }
+
+    .final-subtext {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      font-style: italic;
+      color: rgba(195,220,245,0.75);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .final-hearts {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 32px;
+      font-size: 1.8rem;
+    }
+
+    .final-hearts span {
+      animation: heartBeat 1.4s ease-in-out infinite;
+    }
+    .final-hearts span:nth-child(2) { animation-delay: 0.2s; }
+    .final-hearts span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      14%       { transform: scale(1.25); }
+      28%       { transform: scale(1); }
+      42%       { transform: scale(1.12); }
+      70%       { transform: scale(1); }
+    }
+
+    /* Pause animations while scrolling (class added by JS) */
+    .scrolling .petal,
+    .scrolling .hero-wreath,
+    .scrolling .final-glow-text,
+    .scrolling .hero-date-bubble,
+    .scrolling .final-hearts span,
+    .scrolling .loader-flower {
+      animation-play-state: paused !important;
+    }
+
+    /* When user reaches bottom of page, hide non-essential visuals to avoid jank */
+    .near-bottom .petals-container { display: none !important; }
+    .near-bottom .hero-wreath,
+    .near-bottom .final-glow-text,
+    .near-bottom .hero-cta,
+    .near-bottom .final-hearts span,
+    .near-bottom .hero-date-bubble,
+    .near-bottom .petal {
+      animation-play-state: paused !important;
+      will-change: auto !important;
+    }
+
+    /* Reduce heavy glass/blurs and decorative animations on small screens */
+    @media (max-width: 900px) {
+      .glass-card, #music-btn, .hero-cta {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: none !important;
+        border: 1px solid rgba(255,255,255,0.06) !important;
+        background: rgba(255,255,255,0.06) !important;
+      }
+    }
+
+    /* =============================================
+       ⑤ FOOTER
+    ============================================= */
+    footer {
+      text-align: center;
+      padding: 32px 24px 48px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    footer .footer-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: rgba(195,220,245,0.6);
+      letter-spacing: 0.05em;
+    }
+
+    footer .footer-text span {
+      color: var(--blue-pale);
+      font-weight: 400;
+    }
+
+    /* =============================================
+       SVG FLOWER HELPER
+    ============================================= */
+    .inline-flower {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       LOADING SCREEN
+  ============================================= -->
+  <div id="loader">
+    <div class="loader-flower" aria-hidden="true">
+      <div class="loader-petal"></div>
+      <div class="loader-petal"></div>
+      <div class="loader-petal"></div>
+      <div class="loader-petal"></div>
+      <div class="loader-petal"></div>
+      <div class="loader-petal"></div>
+      <div class="loader-petal"></div>
+      <div class="loader-petal"></div>
+    </div>
+    <p class="loader-text">preparing something special…</p>
+  </div>
+
+  <!-- =============================================
+       FLOATING PETALS CANVAS (background layer)
+  ============================================= -->
+  <div class="petals-container" aria-hidden="true">
+    <div class="petal">🌸</div>
+    <div class="petal">💙</div>
+    <div class="petal">✨</div>
+    <div class="petal">🌸</div>
+  </div>
+
+  <!-- =============================================
+       MUSIC TOGGLE
+       Note: Replace the src below with a real audio URL
+       (e.g., a royalty-free instrumental from pixabay.com)
+  ============================================= -->
+  <audio id="bg-music" loop>
+    <!-- Replace with your chosen romantic instrumental MP3 URL below -->
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg" />
+  </audio>
+  <!-- <button id="music-btn" title="Toggle music" aria-label="Toggle background music">🎵</button> -->
+
+  <!-- =============================================
+       MAIN PAGE
+  ============================================= -->
+  <div id="page">
+
+    <!-- ① HERO SECTION -->
+    <section id="hero">
+
+      <!-- Decorative wreath ring (SVG) -->
+      <svg class="hero-wreath" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Outer ring of small flowers -->
+        <g opacity="0.8">
+          <!-- Repeating small flower at 0° -->
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#c3dcf5" transform="rotate(0 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#c3dcf5" transform="rotate(22.5 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#b8d9f5" transform="rotate(45 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#c3dcf5" transform="rotate(67.5 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#d6ecff" transform="rotate(90 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#c3dcf5" transform="rotate(112.5 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#b8d9f5" transform="rotate(135 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#c3dcf5" transform="rotate(157.5 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#d6ecff" transform="rotate(180 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#c3dcf5" transform="rotate(202.5 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#b8d9f5" transform="rotate(225 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#c3dcf5" transform="rotate(247.5 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#d6ecff" transform="rotate(270 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#c3dcf5" transform="rotate(292.5 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#b8d9f5" transform="rotate(315 200 200)"/>
+          <ellipse cx="200" cy="12" rx="5" ry="9" fill="#c3dcf5" transform="rotate(337.5 200 200)"/>
+        </g>
+        <circle cx="200" cy="200" r="185" stroke="#c3dcf5" stroke-width="0.6" stroke-dasharray="4 8"/>
+      </svg>
+
+      <div class="hero-inner">
+        <!-- Badge -->
+        <div class="hero-badge">✦ a birthday to remember ✦</div>
+
+        <!-- Main heading (edit name here) -->
+        <h1 class="hero-heading">
+          Happy 18th Birthday<br/>
+          <span class="heart-glow">My Cheerful Lady 💙</span>
+        </h1>
+
+        <!-- Romantic subtext -->
+        <p class="hero-sub">
+          "On the day the universe gifted the world with you,<br/>
+          it gave me my favorite reason to smile."
+        </p>
+
+        <!-- Scroll CTA -->
+        <a class="hero-cta" href="#message">Read my letter ↓</a>
+
+        <!-- Glowing 18 bubble -->
+        <div class="hero-date-bubble">
+          <span class="num">18</span>
+          <span class="label">years of you</span>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Pause animations during scroll/resize to reduce jank
+      (function(){
+        let scrollTimer = null;
+        const SCROLL_PAUSE_MS = 160;
+        function onScroll(){
+          document.documentElement.classList.add('scrolling');
+          if(scrollTimer) clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(()=>{
+            document.documentElement.classList.remove('scrolling');
+            scrollTimer = null;
+          }, SCROLL_PAUSE_MS);
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+      })();
+    </script>
+
+    <!-- Decorative flower divider -->
+    <div class="container">
+      <div class="flower-divider">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity="0.6">
+            <ellipse cx="14" cy="4"  rx="3.5" ry="6" fill="#c3dcf5"/>
+            <ellipse cx="14" cy="4"  rx="3.5" ry="6" fill="#c3dcf5" transform="rotate(60 14 14)"/>
+            <ellipse cx="14" cy="4"  rx="3.5" ry="6" fill="#b8d9f5" transform="rotate(120 14 14)"/>
+            <ellipse cx="14" cy="4"  rx="3.5" ry="6" fill="#c3dcf5" transform="rotate(180 14 14)"/>
+            <ellipse cx="14" cy="4"  rx="3.5" ry="6" fill="#d6ecff" transform="rotate(240 14 14)"/>
+            <ellipse cx="14" cy="4"  rx="3.5" ry="6" fill="#c3dcf5" transform="rotate(300 14 14)"/>
+            <circle cx="14" cy="14" r="3" fill="#e8f3fc" opacity="0.8"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ② MAIN MESSAGE SECTION -->
+    <section id="message">
+      <div class="container">
+        <p class="section-label reveal">A Letter From the Heart</p>
+        <h2 class="section-title reveal">For You, My Everything</h2>
+        <div class="divider reveal"></div>
+
+        <div class="glass-card message-card reveal">
+          <p class="salutation">My Cheerful Lady,</p>
+
+          <p>
+            Today the world is a little more beautiful than it was yesterday — because eighteen years ago, you came into it. And somewhere along the way, you came into mine. I don't think I'll ever fully understand how lucky I am, but I spend every day feeling it.
+          </p>
+
+          <p>
+            You are the kind of person people write songs about — the warmth in the corner of your eyes when you laugh, the way you care so deeply for everything and everyone around you, the quiet strength you carry even when things get hard. You make the ordinary feel extraordinary just by being present in it.
+          </p>
+
+          <p>
+            Loving you has taught me what it means to truly see someone. Not just the parts they show the world, but the small things — the way you think, the things that make you nervous, the dreams you hold close. I see all of you, and I am in awe of every single part.
+          </p>
+
+          <p>
+            On this day, as you step into eighteen, I want you to know: I am proud of the person you are. The miles we might be apart, the days that are tough, the moments that feel uncertain — none of that changes what I feel for you. You are home to me.
+          </p>
+
+          <p>
+            I dream of all the roads we'll walk together — early mornings, late nights, adventures in cities we haven't been to yet, quiet evenings that feel like everything. I want to be the one beside you through all of it. And I intend to be.
+          </p>
+
+          <p>
+            So happy birthday, my love. This year, and every one after it, I hope you feel as cherished as you deserve to be. Because to me, you are the whole world.
+          </p>
+
+          <p class="sign-off">Forever yours — Arko 💙</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Decorative divider -->
+    <div class="container">
+      <div class="flower-divider reveal">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity="0.55">
+            <ellipse cx="14" cy="4" rx="3" ry="5.5" fill="#e8c9f0" transform="rotate(0 14 14)"/>
+            <ellipse cx="14" cy="4" rx="3" ry="5.5" fill="#c3dcf5" transform="rotate(72 14 14)"/>
+            <ellipse cx="14" cy="4" rx="3" ry="5.5" fill="#e8c9f0" transform="rotate(144 14 14)"/>
+            <ellipse cx="14" cy="4" rx="3" ry="5.5" fill="#c3dcf5" transform="rotate(216 14 14)"/>
+            <ellipse cx="14" cy="4" rx="3" ry="5.5" fill="#e8c9f0" transform="rotate(288 14 14)"/>
+            <circle cx="14" cy="14" r="3" fill="#f0e0f8" opacity="0.7"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ③ MEMORY / CUTE NOTES SECTION -->
+    <section id="notes">
+      <div class="container">
+        <p class="section-label reveal">Little Notes for You</p>
+        <h2 class="section-title reveal">Moments &amp; Feelings</h2>
+        <div class="divider reveal"></div>
+
+        <div class="notes-grid">
+
+          <!-- Note Card 1 -->
+          <div class="glass-card note-card reveal">
+            <span class="note-icon">✨</span>
+            <p class="note-text">"You make my world brighter just by existing in it."</p>
+            <p class="note-caption">always &amp; forever</p>
+          </div>
+
+          <!-- Note Card 2 -->
+          <div class="glass-card note-card reveal">
+            <span class="note-icon">💙</span>
+            <p class="note-text">"Every moment with you feels like the best kind of magic."</p>
+            <p class="note-caption">the one &amp; only</p>
+          </div>
+
+          <!-- Note Card 3 -->
+          <div class="glass-card note-card reveal">
+            <span class="note-icon">🌸</span>
+            <p class="note-text">"My favorite place in the world is wherever you are."</p>
+            <p class="note-caption">home</p>
+          </div>
+
+          <!-- Note Card 4 -->
+          <div class="glass-card note-card reveal">
+            <span class="note-icon">🌙</span>
+            <p class="note-text">"Even on the quietest nights, you are the loudest joy in my heart."</p>
+            <p class="note-caption">under the same sky</p>
+          </div>
+
+          <!-- Note Card 5 -->
+          <div class="glass-card note-card reveal">
+            <span class="note-icon">🫧</span>
+            <p class="note-text">"I'd choose you, in a hundred lifetimes, in a hundred worlds, in any version of reality."</p>
+            <p class="note-caption">in every universe</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ④ FINAL WISH SECTION -->
+    <section id="final">
+      <div class="container">
+        <div class="divider reveal"></div>
+
+        <p class="section-label reveal" style="margin-bottom: 28px;">A Wish Just For You</p>
+
+        <p class="final-glow-text reveal">
+          May this birthday be the beginning of the most beautiful chapter of your life. 🌷
+        </p>
+
+        <p class="final-subtext reveal">
+          "Here's to eighteen — to your laugh, your dreams, your becoming.<br/>
+          The world needs more of you in it."
+        </p>
+
+        <div class="final-hearts reveal" aria-hidden="true">
+          <span>💙</span>
+          <span>🤍</span>
+          <span>💙</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑤ FOOTER -->
+    <footer>
+      <!-- Edit name here -->
+      <p class="footer-text">Made with all my love by <span>Arko</span> 💙</p>
+    </footer>
+
+  </div><!-- /#page -->
+
+
+  <!-- =============================================
+       JAVASCRIPT
+  ============================================= -->
+  <script>
+    // ─────────────────────────────────────────────
+    // 1. LOADING SCREEN — remove after page loads
+    // ─────────────────────────────────────────────
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      const page   = document.getElementById('page');
+
+      // Small extra delay for a luxurious feel
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        page.classList.add('visible');
+      }, 1600);
+    });
+
+
+    // ─────────────────────────────────────────────
+    // 2. FLOATING PETALS & HEARTS CANVAS ANIMATION (guarded)
+    // ─────────────────────────────────────────────
+    const canvas = document.getElementById('petals-canvas');
+    if (canvas && canvas.getContext) {
+      const ctx    = canvas.getContext('2d');
+
+      // Resize canvas to full viewport
+      function resizeCanvas() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      // Particle configuration
+      const PARTICLE_COUNT = 38;
+      const particles = [];
+
+      // Particle types: petal or heart
+      const TYPES  = ['petal', 'heart'];
+      // Petal colors matching our palette
+      const COLORS = ['#c3dcf5', '#b8d9f5', '#d6ecff', '#e8c9f0', '#a8c8e8'];
+
+      // Create a single particle with random properties
+      function createParticle() {
+        return {
+          x:       Math.random() * canvas.width,
+          y:       Math.random() * canvas.height - canvas.height, // start above viewport
+          size:    Math.random() * 10 + 6,
+          speedX:  (Math.random() - 0.5) * 0.6,
+          speedY:  Math.random() * 0.8 + 0.3,
+          angle:   Math.random() * Math.PI * 2,
+          spin:    (Math.random() - 0.5) * 0.025,
+          opacity: Math.random() * 0.45 + 0.15,
+          color:   COLORS[Math.floor(Math.random() * COLORS.length)],
+          type:    TYPES[Math.floor(Math.random() * TYPES.length)],
+          sway:    Math.random() * 0.4 + 0.1,
+          phase:   Math.random() * Math.PI * 2,
+        };
+      }
+
+      // Initialise all particles
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const p = createParticle();
+        p.y = Math.random() * canvas.height; // spread vertically on first load
+        particles.push(p);
+      }
+
+      // Draw a petal shape
+      function drawPetal(cx, cy, size, angle, color, opacity) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(angle);
+        ctx.globalAlpha = opacity;
+
+        const gradient = ctx.createRadialGradient(0, -size * 0.3, 0, 0, 0, size);
+        gradient.addColorStop(0, color);
+        gradient.addColorStop(1, color + '44');
+
+        ctx.beginPath();
+        ctx.ellipse(0, -size / 2, size * 0.4, size * 0.7, 0, 0, Math.PI * 2);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Draw a small heart shape
+      function drawHeart(cx, cy, size, angle, color, opacity) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(angle);
+        ctx.globalAlpha = opacity;
+        ctx.scale(size / 16, size / 16);
+
+        ctx.beginPath();
+        ctx.moveTo(0, 4);
+        ctx.bezierCurveTo(0, 0, -8, 0, -8, -4);
+        ctx.bezierCurveTo(-8, -10, 0, -10, 0, -5);
+        ctx.bezierCurveTo(0, -10, 8, -10, 8, -4);
+        ctx.bezierCurveTo(8, 0, 0, 0, 0, 4);
+        ctx.closePath();
+
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Main animation loop
+      let frame = 0;
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        frame++;
+
+        for (const p of particles) {
+          // Gentle horizontal sway
+          p.x += p.speedX + Math.sin(frame * 0.008 + p.phase) * p.sway;
+          p.y += p.speedY;
+          p.angle += p.spin;
+
+          // Draw based on type
+          if (p.type === 'petal') {
+            drawPetal(p.x, p.y, p.size, p.angle, p.color, p.opacity);
+          } else {
+            drawHeart(p.x, p.y, p.size * 0.9, p.angle, p.color, p.opacity);
+          }
+
+          // Reset when particle drifts off screen
+          if (p.y > canvas.height + 30) {
+            Object.assign(p, createParticle());
+            p.x = Math.random() * canvas.width;
+            p.y = -20;
+          }
+          if (p.x < -30)  p.x = canvas.width + 20;
+          if (p.x > canvas.width + 30) p.x = -20;
+        }
+
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+
+    // ─────────────────────────────────────────────
+    // 3. SCROLL REVEAL
+    // ─────────────────────────────────────────────
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // Stagger reveals slightly for natural flow
+          entry.target.style.transitionDelay = `${i * 0.05}s`;
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+
+
+    // ─────────────────────────────────────────────
+    // 4. MUSIC TOGGLE
+    // ─────────────────────────────────────────────
+    const musicBtn   = document.getElementById('music-btn');
+    const bgMusic    = document.getElementById('bg-music');
+    let   isPlaying  = false;
+
+    musicBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        bgMusic.pause();
+        musicBtn.textContent = '🎵';
+        musicBtn.classList.remove('playing');
+        musicBtn.setAttribute('title', 'Play music');
+        isPlaying = false;
+      } else {
+        bgMusic.play().catch(() => {
+          // Autoplay blocked — user already clicked so it should be fine
+          console.info('Music play was blocked. Try clicking again.');
+        });
+        musicBtn.textContent = '🎶';
+        musicBtn.classList.add('playing');
+        musicBtn.setAttribute('title', 'Pause music');
+        isPlaying = true;
+      }
+    });
+
+    // ─────────────────────────────────────────────
+    // 5. PAUSE/HIDE NON-ESSENTIAL VISUALS WHEN USER REACHES PAGE END
+    // ─────────────────────────────────────────────
+    (function(){
+      try {
+        // Create a simple sentinel at the end of the document flow (not absolutely positioned)
+        const sentinel = document.createElement('div');
+        sentinel.id = 'bottom-sentinel';
+        sentinel.style.width = '100%';
+        sentinel.style.height = '1px';
+        sentinel.style.display = 'block';
+        document.body.appendChild(sentinel);
+
+        let observed = false;
+        if ('IntersectionObserver' in window) {
+          const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+              if (e.isIntersecting) {
+                document.documentElement.classList.add('near-bottom');
+                observed = true;
+              } else {
+                document.documentElement.classList.remove('near-bottom');
+                observed = false;
+              }
+            });
+          }, { root: null, threshold: 0 });
+
+          obs.observe(sentinel);
+        }
+
+        // Fallback & robustness: rAF-throttled scroll check to detect near-bottom reliably
+        let ticking = false;
+        function checkNearBottom() {
+          ticking = false;
+          const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+          const vh = window.innerHeight || document.documentElement.clientHeight;
+          const docH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+          const distanceFromBottom = docH - (scrollY + vh);
+          // If within 400px of bottom, consider 'near-bottom' and disable all animations
+          if (distanceFromBottom <= 400) {
+            if (!document.documentElement.classList.contains('near-bottom')) {
+              document.documentElement.classList.add('near-bottom');
+            }
+          } else {
+            if (document.documentElement.classList.contains('near-bottom')) {
+              document.documentElement.classList.remove('near-bottom');
+            }
+          }
+        }
+
+        function onScrollForBottom() {
+          if (!ticking) {
+            window.requestAnimationFrame(checkNearBottom);
+            ticking = true;
+          }
+        }
+
+        window.addEventListener('scroll', onScrollForBottom, { passive: true });
+        window.addEventListener('resize', onScrollForBottom, { passive: true });
+
+      } catch (err) {
+        console.warn('bottom sentinel observer failed', err);
+      }
+    })();
+  </script>
+
+</body>
+</html>

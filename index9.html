@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 18th Birthday, My Love 💙</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- DESIGN SYSTEM & VARIABLES --- */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #eef5ff 0%, #d2e4ff 50%, #e8f0fe 100%);
+            --primary-blue: #5b8fb9;
+            --dark-blue: #305d83;
+            --soft-blue: #b3cde6;
+            --pastel-white: rgba(255, 255, 255, 0.45);
+            --card-border: rgba(255, 255, 255, 0.6);
+            --text-dark: #2c3e50;
+            --text-muted: #546e7a;
+            --glow-blue: rgba(91, 143, 185, 0.3);
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-serif: 'Dancing Script', cursive;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-gradient);
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- LOADING SCREEN --- */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #eef5ff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease, visibility 1s;
+        }
+
+        .loader-heart {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            animation: beat 1.2s infinite ease-in-out;
+            margin-bottom: 15px;
+        }
+
+        .loader-text {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--dark-blue);
+            letter-spacing: 1px;
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px var(--primary-blue)); }
+            50% { transform: scale(1.2); filter: drop-shadow(0 0 15px var(--primary-blue)); }
+        }
+
+        /* --- BACKGROUND CANVAS & MUSIC TOGGLE --- */
+        #petalCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: var(--pastel-white);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .music-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--dark-blue);
+        }
+
+        /* --- GLOBAL LAYOUT & GLASSMORPHISM --- */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass-card {
+            background: var(--pastel-white);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(142, 175, 204, 0.2);
+            padding: 40px;
+            margin: 40px 0;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* --- SCROLL ANIMATION BASE --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- SVG DECORATIONS --- */
+        .flower-dec {
+            position: absolute;
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .flower-top-left { top: -20px; left: -40px; width: 180px; }
+        .flower-bottom-right { bottom: -30px; right: -40px; width: 180px; transform: rotate(180deg); }
+
+        /* ==========================================================================
+           1. HERO SECTION
+           ========================================================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+        }
+
+        .hero-title {
+            font-family: var(--font-serif);
+            font-size: 4rem;
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 0 0 20px rgba(255,255,255,0.6);
+            animation: fadeInDown 1.5s ease;
+        }
+
+        .hero-subtext {
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-weight: 400;
+            animation: fadeInUp 1.8s ease;
+        }
+
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--primary-blue);
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ==========================================================================
+           2. MAIN MESSAGE SECTION
+           ========================================================================== */
+        .message-section {
+            position: relative;
+        }
+
+        .message-title {
+            font-family: var(--font-serif);
+            font-size: 2.8rem;
+            color: var(--dark-blue);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .message-content p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .message-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ==========================================================================
+           3. MEMORY / CUTE NOTES SECTION
+           ========================================================================== */
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .note-card {
+            background: var(--pastel-white);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 30px 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(142, 175, 204, 0.1);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .note-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px var(--glow-blue);
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .note-icon {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .note-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* ==========================================================================
+           4. FINAL SECTION
+           ========================================================================== */
+        .final-section {
+            text-align: center;
+            padding: 60px 40px;
+            margin-bottom: 80px;
+        }
+
+        .final-wish {
+            font-family: var(--font-serif);
+            font-size: 3.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .final-wish::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
+        }
+
+        .final-subtext {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* ==========================================================================
+           5. FOOTER
+           ========================================================================== */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--card-border);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-text {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--dark-blue);
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        /* --- KEYFRAMES ANIMATIONS --- */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.8rem; }
+            .hero-subtext { font-size: 0.95rem; }
+            .message-title { font-size: 2.2rem; }
+            .final-wish { font-size: 2.4rem; }
+            .glass-card { padding: 25px; margin: 20px 0; }
+            .message-content p { font-size: 1.05rem; text-align: left; }
+            .flower-top-left, .flower-bottom-right { width: 120px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="loader-heart">💙</div>
+        <div class="loader-text">Entering your magical day...</div>
+    </div>
+
+    <canvas id="petalCanvas"></canvas>
+
+    <audio id="bgMusic" loop preload="auto">
+        <!-- <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"> -->
+    </audio>
+
+    <button  id="musicToggle" title="Toggle Music">
+        <!-- <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> -->
+        <!-- <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg> -->
+    </button>
+
+    <div class="container">
+        
+        <section class="hero">
+            <h1 class="hero-title">Happy 18th Birthday<br>Babu 💙</h1>
+            <p class="hero-subtext">Welcome to your beautiful new chapter</p>
+            <a href="#message" class="scroll-indicator">
+                <span>Scroll into my heart</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-blue);"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+            </a>
+        </section>
+
+        <section id="message" class="glass-card message-section reveal">
+            <svg class="flower-dec flower-top-left" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 20 C45 5, 25 5, 25 25 C25 45, 45 45, 50 50 C55 45, 75 45, 75 25 C75 5, 55 5, 50 20 Z" fill="#b3cde6" />
+                <path d="M50 80 C45 95, 25 95, 25 75 C25 55, 45 55, 50 50 C55 55, 75 55, 75 75 C75 95, 55 95, 50 80 Z" fill="#b3cde6" />
+                <path d="M20 50 C5 45, 5 25, 25 25 C45 25, 45 45, 50 50 C45 55, 45 75, 25 75 C5 75, 5 55, 20 50 Z" fill="#98b9d7" />
+                <path d="M80 50 C95 45, 95 25, 75 25 C55 25, 55 45, 50 50 C55 55, 55 75, 75 75 C95 75, 95 55, 80 50 Z" fill="#98b9d7" />
+                <circle cx="50" cy="50" r="8" fill="#fff" opacity="0.9"/>
+            </svg>
+
+            <h2 class="message-title">To Someone Incredibly Special,</h2>
+            <div class="message-content">
+                <p>Happy 18th Birthday! Today is a monumental milestone, marking the beginning of adulthood, but to me, it's simply another beautiful day to celebrate the wonderful human being you are. Looking back, every single day spent by your side has brought a warmth and clarity to my life that I didn't know I was searching for. Your laughter is my peace, and your presence makes the world feel infinitely more aligned.</p>
+                
+                <p>I appreciate you more than words can adequately convey—not just for your boundless kindness, your bright intellect, and your absolute grace, but for the quiet, genuine moments where your heart shines through. You possess a rare ability to elevate everything around you, and being trusted with your love is a privilege I hold closer than anything else.</p>
+                
+                <p>As you step into your future, remember that you are capable of achieving every dream you've ever held. I look forward to watching you flourish, conquering new heights, and mapping out the horizon. No matter where the years lead us, I hope to be right there alongside you, sharing the quiet victories, supporting you through the challenges, and building our future together. You mean everything to me. Happy Birthday, my love.</p>
+            </div>
+
+            <svg class="flower-dec flower-bottom-right" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 20 C45 5, 25 5, 25 25 C25 45, 45 45, 50 50 C55 45, 75 45, 75 25 C75 5, 55 5, 50 20 Z" fill="#b3cde6" />
+                <path d="M50 80 C45 95, 25 95, 25 75 C25 55, 45 55, 50 50 C55 55, 75 55, 75 75 C75 95, 55 95, 50 80 Z" fill="#b3cde6" />
+                <circle cx="50" cy="50" r="8" fill="#fff" opacity="0.9"/>
+            </svg>
+        </section>
+
+        <section class="notes-grid">
+            <div class="note-card reveal">
+                <span class="note-icon">✨</span>
+                <p class="note-text">You make my world infinitely brighter just by being in it.</p>
+            </div>
+            <div class="note-card reveal">
+                <span class="note-icon">💙</span>
+                <p class="note-text">Every single moment spent with you feels like pure magic.</p>
+            </div>
+            <div class="note-card reveal">
+                <span class="note-icon">🌿</span>
+                <p class="note-text">In a crowded room, my eyes will always search for yours.</p>
+            </div>
+            <div class="note-card reveal">
+                <span class="note-icon">🌙</span>
+                <p class="note-text">Growing alongside you is my absolute favorite journey.</p>
+            </div>
+        </section>
+
+        <section class="glass-card final-section reveal">
+            <h3 class="final-wish">Cheers to 18 Years of You 💙</h3>
+            <p class="final-subtext">May your day be as wonderfully radiant and unforgettable as your smile.</p>
+        </section>
+
+    </div>
+
+    <footer>
+        <p class="footer-text">Made by your loving bf Arko 💙</p>
+    </footer>
+
+
+    <script>
+        // 1. Loader Removal Logic
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+            }, 1200); // Gives a nice aesthetic loading transition breathing space
+        });
+
+        // 2. Background Music Controller Trigger
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+
+        musicToggle.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play().catch(error => console.log("Audio play prevented by browser policies. Needs user gesture interaction."));
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            } else {
+                bgMusic.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            }
+        });
+
+        // 3. Scroll Reveal System Intersecting Elements Observer
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        revealElements.forEach(element => revealObserver.observe(element));
+
+        // 4. Custom Canvas Flower Petals Animation Engine
+        const canvas = document.getElementById('petalCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const numPetals = 45;
+        const petalsArray = [];
+
+        // Define Soft Pastel Blue Tones for Petals
+        const petalColors = [
+            'rgba(179, 205, 230, 0.6)', // soft-blue
+            'rgba(210, 228, 255, 0.5)', // light pastel blue
+            'rgba(152, 185, 215, 0.4)', // muted denim pastel
+            'rgba(255, 255, 255, 0.7)'  // pure white drift
+        ];
+
+        class Petal {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * -height;
+                this.size = Math.random() * 8 + 6;
+                this.speedY = Math.random() * 1.2 + 0.8;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.color = petalColors[Math.floor(Math.random() * petalColors.length)];
+                this.opacity = Math.random() * 0.6 + 0.4;
+                this.flip = Math.random();
+                this.flipSpeed = Math.random() * 0.03 + 0.01;
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.y / 30) * 0.3; // Adds a gentle organic sway
+                this.flip += this.flipSpeed;
+
+                // Reset logic when a petal goes offscreen
+                if (this.y > height) {
+                    this.y = -20;
+                    this.x = Math.random() * width;
+                    this.speedY = Math.random() * 1.2 + 0.8;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.flip);
+                ctx.scale(Math.sin(this.flip), 1); // Emulates rotation flip dynamics in 2D space
+
+                ctx.beginPath();
+                // Creates an organic leaf/petal almond shape curve
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(-this.size, this.size / 2, -this.size, this.size * 2, 0, this.size * 2.5);
+                ctx.bezierCurveTo(this.size, this.size * 2, this.size, this.size / 2, 0, 0);
+                
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // Initialize array elements loop
+        for (let i = 0; i < numPetals; i++) {
+            petalsArray.push(new Petal());
+        }
+
+        // Master Animation Frame Loop
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            petalsArray.forEach(petal => {
+                petal.update();
+                petal.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>

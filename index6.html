@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy 18th Birthday My Love 💙</title>
+  <meta name="description" content="A dreamy romantic birthday wish page for an 18th birthday." />
+  <style>
+    :root{
+      --bg1:#dcecff;
+      --bg2:#f8fbff;
+      --card:rgba(255,255,255,.18);
+      --card-border:rgba(255,255,255,.35);
+      --text:#14324d;
+      --muted:#4d6b86;
+      --accent:#6ea8ff;
+      --accent2:#a6d7ff;
+      --shadow:0 20px 60px rgba(59, 102, 160, .18);
+      --glow:0 0 30px rgba(110,168,255,.45);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, Poppins, "Segoe UI", Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.95), transparent 35%),
+        radial-gradient(circle at top right, rgba(174,214,255,.65), transparent 28%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+      min-height:100vh;
+    }
+
+    /* Loading screen */
+    .loader{
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(180deg, #d9ebff, #f8fbff);
+      z-index:9999;
+      transition:opacity .8s ease, visibility .8s ease;
+    }
+    .loader.hide{
+      opacity:0;
+      visibility:hidden;
+    }
+    .loader-card{
+      text-align:center;
+      padding:28px 30px;
+      border-radius:24px;
+      background:rgba(255,255,255,.42);
+      backdrop-filter:blur(14px);
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.55);
+    }
+    .spinner{
+      width:66px;
+      height:66px;
+      margin:0 auto 16px;
+      border-radius:50%;
+      border:5px solid rgba(110,168,255,.18);
+      border-top-color:var(--accent);
+      animation:spin 1s linear infinite;
+    }
+    .loader p{margin:0;color:var(--muted);font-size:.98rem}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* Floating decorations */
+    .float-layer{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:0;
+    }
+    .petal,.heart{
+      position:absolute;
+      opacity:.65;
+      animation:drift linear infinite;
+      filter:drop-shadow(0 8px 10px rgba(90,130,190,.12));
+    }
+    .petal{
+      width:18px;height:26px;
+      background:linear-gradient(180deg, #ffffff, #b7dbff);
+      border-radius:50% 50% 50% 0;
+      transform:rotate(25deg);
+    }
+    .heart{
+      width:16px;height:16px;
+      background:#8ec5ff;
+      transform:rotate(45deg);
+      border-radius:4px;
+    }
+    .heart::before,.heart::after{
+      content:"";
+      position:absolute;
+      width:16px;height:16px;
+      border-radius:50%;
+      background:inherit;
+    }
+    .heart::before{left:-8px;top:0}
+    .heart::after{top:-8px;left:0}
+    @keyframes drift{
+      from{transform:translateY(110vh) translateX(0) rotate(0deg);opacity:0}
+      10%{opacity:.75}
+      to{transform:translateY(-20vh) translateX(80px) rotate(360deg);opacity:0}
+    }
+
+    .container{
+      position:relative;
+      z-index:1;
+      width:min(1100px, 92vw);
+      margin:0 auto;
+      padding:28px 0 44px;
+    }
+
+    nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 0 22px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      font-weight:700;
+      letter-spacing:.3px;
+    }
+    .brand-mark{
+      width:42px;height:42px;border-radius:14px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg, rgba(255,255,255,.7), rgba(165,214,255,.45));
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.6);
+    }
+    .music-btn{
+      border:none;
+      cursor:pointer;
+      color:var(--text);
+      padding:12px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.35);
+      backdrop-filter:blur(12px);
+      border:1px solid var(--card-border);
+      box-shadow:var(--shadow);
+      transition:transform .25s ease, background .25s ease;
+      font-weight:600;
+    }
+    .music-btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.52)}
+
+    .hero, .section-card{
+      background:var(--card);
+      border:1px solid var(--card-border);
+      backdrop-filter:blur(16px);
+      box-shadow:var(--shadow);
+      border-radius:30px;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      padding:72px 22px;
+      text-align:center;
+      min-height:540px;
+      display:grid;
+      place-items:center;
+    }
+    .glow{
+      position:absolute;
+      inset:auto;
+      width:320px;height:320px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.9), rgba(140,194,255,.08) 60%, transparent 70%);
+      filter:blur(8px);
+      animation:pulse 4.5s ease-in-out infinite;
+      z-index:0;
+    }
+    .glow.one{top:-40px;left:-60px}
+    .glow.two{bottom:-80px;right:-70px;animation-delay:1.4s}
+    @keyframes pulse{
+      0%,100%{transform:scale(.95);opacity:.55}
+      50%{transform:scale(1.08);opacity:.95}
+    }
+
+    .hero-content{position:relative;z-index:1;max-width:820px}
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.28);
+      border:1px solid rgba(255,255,255,.52);
+      color:var(--muted);
+      margin-bottom:18px;
+    }
+    h1{
+      margin:0;
+      font-size:clamp(2.5rem, 6vw, 5.2rem);
+      line-height:1.05;
+      letter-spacing:-.03em;
+      text-shadow:0 8px 24px rgba(101,147,200,.18);
+    }
+    .hero p{
+      max-width:690px;
+      margin:18px auto 0;
+      font-size:clamp(1rem, 2vw, 1.18rem);
+      line-height:1.8;
+      color:var(--muted);
+    }
+
+    .flower-row{
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      margin-top:26px;
+      flex-wrap:wrap;
+    }
+    .flower{
+      width:52px;height:52px;border-radius:50%;
+      background:
+        radial-gradient(circle at center, #ffffff 0 10%, transparent 11%),
+        radial-gradient(circle at 50% 18%, #cfe7ff 0 14%, transparent 15%),
+        radial-gradient(circle at 82% 50%, #cfe7ff 0 14%, transparent 15%),
+        radial-gradient(circle at 50% 82%, #cfe7ff 0 14%, transparent 15%),
+        radial-gradient(circle at 18% 50%, #cfe7ff 0 14%, transparent 15%),
+        radial-gradient(circle at center, rgba(122,177,255,.5), rgba(122,177,255,.15) 62%, transparent 63%);
+      box-shadow:var(--glow);
+      animation:floaty 5s ease-in-out infinite;
+    }
+    .flower:nth-child(2){animation-delay:.8s}
+    .flower:nth-child(3){animation-delay:1.5s}
+    .flower:nth-child(4){animation-delay:2.1s}
+    @keyframes floaty{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-10px)}
+    }
+
+    .section{
+      margin-top:28px;
+      display:grid;
+      gap:24px;
+    }
+    .section-card{
+      padding:28px;
+    }
+    .section-title{
+      margin:0 0 12px;
+      font-size:clamp(1.5rem, 3vw, 2.1rem);
+    }
+    .message{
+      font-size:1.05rem;
+      line-height:1.95;
+      color:#35526a;
+    }
+
+    .notes-grid{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0, 1fr));
+      gap:16px;
+    }
+    .note{
+      padding:20px 18px;
+      border-radius:22px;
+      background:rgba(255,255,255,.28);
+      border:1px solid rgba(255,255,255,.45);
+      box-shadow:0 12px 30px rgba(78,122,181,.10);
+      min-height:118px;
+      display:flex;
+      align-items:flex-end;
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .note:hover{transform:translateY(-6px);box-shadow:0 18px 34px rgba(78,122,181,.16)}
+    .note p{margin:0;font-size:1rem;line-height:1.65;color:#29485f}
+
+    .final{
+      text-align:center;
+      padding:40px 24px;
+      overflow:hidden;
+      position:relative;
+    }
+    .final h2{
+      margin:0;
+      font-size:clamp(1.8rem, 4vw, 3rem);
+      animation:shine 2.8s ease-in-out infinite;
+    }
+    .final p{
+      color:var(--muted);
+      margin:12px auto 0;
+      max-width:700px;
+      line-height:1.8;
+    }
+    @keyframes shine{
+      0%,100%{text-shadow:0 0 0 rgba(110,168,255,0)}
+      50%{text-shadow:0 0 24px rgba(110,168,255,.55)}
+    }
+
+    footer{
+      text-align:center;
+      padding:24px 10px 6px;
+      color:#4e6c86;
+      font-style:italic;
+      letter-spacing:.2px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .notes-grid{grid-template-columns:repeat(2, minmax(0, 1fr))}
+      .hero{padding:64px 18px;min-height:auto}
+    }
+    @media (max-width: 560px){
+      nav{flex-direction:column;gap:14px}
+      .notes-grid{grid-template-columns:1fr}
+      .section-card{padding:22px}
+      .music-btn{width:100%}
+      .brand{justify-content:center}
+    }
+
+    /* Smooth entrance */
+    .fade-up{opacity:0; transform:translateY(18px); transition:opacity .8s ease, transform .8s ease}
+    .fade-up.show{opacity:1; transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <!-- Loading overlay -->
+  <div class="loader" id="loader">
+    <div class="loader-card">
+      <div class="spinner"></div>
+      <p>Preparing your birthday surprise...</p>
+    </div>
+  </div>
+
+  <!-- Floating background petals/hearts -->
+  <div class="float-layer" id="floatLayer"></div>
+
+  <div class="container">
+    <!-- <nav class="fade-up">
+      <div class="brand">
+        <div class="brand-mark">💙</div>
+        <div>
+          <div style="font-size:1rem">Birthday Love Page</div>
+          <div style="font-size:.85rem;color:var(--muted);font-weight:500">Soft romantic edition</div>
+        </div>
+      </div>
+      <button class="music-btn" id="musicBtn">▶ Play music</button>
+    </nav> -->
+
+    <section class="hero fade-up">
+      <div class="glow one"></div>
+      <div class="glow two"></div>
+
+      <div class="hero-content">
+        <div class="eyebrow">18th Birthday · Blue floral dream ✨</div>
+        <h1>Happy 18th Birthday My Love 💙</h1>
+        <p>
+          Today is all about you — your smile, your softness, your beautiful heart, and the way you make every ordinary moment feel unforgettable. This little page is made with love, just for the most special girl in my world.
+        </p>
+
+        <div class="flower-row" aria-hidden="true">
+          <div class="flower"></div>
+          <div class="flower"></div>
+          <div class="flower"></div>
+          <div class="flower"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section">
+      <section class="section-card fade-up">
+        <h2 class="section-title">My Heartfelt Message</h2>
+        <div class="message">
+          My love, happy 18th birthday. Watching you grow into the incredible person you are today makes me feel so proud and so lucky at the same time. You bring warmth, joy, and a kind of peace into my life that I will always treasure. Your laughter feels like music, your presence feels like home, and your heart is one of the sweetest things I have ever known. On your special day, I want you to remember that you are deeply loved, truly appreciated, and endlessly important to me. I hope this year gives you beautiful memories, big smiles, and the courage to chase every dream you keep in your heart. I dream of a future where we keep supporting each other, growing together, and making a thousand tiny moments that feel like forever. You are not just my girlfriend — you are someone I admire, adore, and feel so grateful to have in my life.
+        </div>
+      </section>
+
+      <section class="section-card fade-up">
+        <h2 class="section-title">Cute Notes</h2>
+        <div class="notes-grid">
+          <div class="note"><p>You make my world brighter ✨</p></div>
+          <div class="note"><p>Every moment with you feels magical 💙</p></div>
+          <div class="note"><p>Your smile is my favorite view 🌷</p></div>
+          <div class="note"><p>You are my sweetest little dream ☁️</p></div>
+        </div>
+      </section>
+
+      <section class="section-card final fade-up">
+        <h2>Wishing you the softest, happiest, most beautiful 18th birthday ever 💫</h2>
+        <p>
+          May your day be filled with love, blue-sky peace, glowing memories, and every beautiful thing your heart deserves.
+        </p>
+      </section>
+    </div>
+
+    <footer>Made by your loving bf Arko 💙</footer>
+  </div>
+
+  <!-- Romantic instrumental placeholder -->
+  <audio id="bgMusic" loop preload="none">
+    <!-- Replace the source below with your own mp3 file if you want.
+         Example: <source src="romantic-instrumental.mp3" type="audio/mpeg"> -->
+  </audio>
+
+  <script>
+    // Loading screen
+    window.addEventListener("load", () => {
+      setTimeout(() => document.getElementById("loader").classList.add("hide"), 1200);
+    });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll(".fade-up");
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("show");
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => io.observe(el));
+
+    // Floating petals/hearts generator
+    const layer = document.getElementById("floatLayer");
+    function createFloat(kind) {
+      const el = document.createElement("div");
+      el.className = kind;
+      const size = Math.random() * 14 + 10;
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDuration = (Math.random() * 10 + 10) + "s";
+      el.style.animationDelay = (-Math.random() * 20) + "s";
+      el.style.opacity = (Math.random() * 0.45 + 0.35).toFixed(2);
+      if (kind === "heart") {
+        el.style.transform = `rotate(45deg) scale(${(Math.random() * 0.8 + 0.7).toFixed(2)})`;
+      }
+      layer.appendChild(el);
+    }
+    for (let i = 0; i < 18; i++) createFloat(i % 3 === 0 ? "heart" : "petal");
+
+    // Music toggle
+    const musicBtn = document.getElementById("musicBtn");
+    const bgMusic = document.getElementById("bgMusic");
+    let playing = false;
+
+    musicBtn.addEventListener("click", async () => {
+      try {
+        if (!playing) {
+          // Add your music file in the same folder and set the source here.
+          if (!bgMusic.querySelector("source")) {
+            const src = document.createElement("source");
+            src.src = "romantic-instrumental.mp3";
+            src.type = "audio/mpeg";
+            bgMusic.appendChild(src);
+            bgMusic.load();
+          }
+          await bgMusic.play();
+          playing = true;
+          musicBtn.textContent = "⏸ Pause music";
+        } else {
+          bgMusic.pause();
+          playing = false;
+          musicBtn.textContent = "▶ Play music";
+        }
+      } catch (e) {
+        alert("Add your romantic-instrumental.mp3 file beside this HTML file to enable music.");
+      }
+    });
+
+    // Optional gentle ambient movement
+    document.addEventListener("mousemove", (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 10;
+      const y = (e.clientY / window.innerHeight - 0.5) * 10;
+      document.querySelector(".hero-content").style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+    });
+  </script>
+</body>
+</html>
