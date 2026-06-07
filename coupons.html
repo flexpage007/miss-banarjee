@@ -1,10 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Love Coupon Library</title>
   <style>
+    .coupon-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .75);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+    }
+
+    .coupon-modal.hidden {
+      display: none;
+    }
+
+    .coupon-modal-box {
+      width: min(90%, 380px);
+      padding: 24px;
+      border-radius: 20px;
+      text-align: center;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+        rgba(12, 20, 42, 0.6);
+      backdrop-filter: blur(10px) saturate(115%);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.5);
+      border-radius: 18px;
+    }
+
+    /* Tier color variants for the modal box */
+    .coupon-modal-box.blue {
+      border-color: rgba(89, 184, 255, 0.34);
+      background:
+        linear-gradient(135deg, rgba(89,184,255,0.12), rgba(255,255,255,0.02)),
+        rgba(8,14,30,0.6);
+    }
+
+    .coupon-modal-box.red {
+      border-color: rgba(255, 95, 116, 0.34);
+      background:
+        linear-gradient(135deg, rgba(255,95,116,0.12), rgba(255,255,255,0.02)),
+        rgba(24,8,12,0.6);
+    }
+
+    .coupon-modal-box.pink {
+      border-color: rgba(255, 139, 214, 0.34);
+      background:
+        linear-gradient(135deg, rgba(255,139,214,0.12), rgba(255,255,255,0.02)),
+        rgba(30,12,28,0.6);
+    }
+
+    .coupon-modal-box.white {
+      border-color: rgba(255, 255, 255, 0.42);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6)),
+        rgba(255,255,255,0.04);
+      color: #071426;
+    }
+
+    .modal-code {
+      font-size: 1.2rem;
+      font-weight: 900;
+      margin: 12px 0;
+      color: #59b8ff;
+    }
+
+    .modal-msg {
+      color: #cfd8e3;
+      margin: 16px 0;
+    }
+
+    .timer-bar {
+      height: 10px;
+      background: rgba(255, 255, 255, .1);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 20px 0 10px;
+    }
+
+    .timer-fill {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #59b8ff, #ff5f74);
+      transform-origin: left center;
+      transform: scaleX(1);
+      transition: transform linear;
+      will-change: transform;
+    }
+
+    #timerText {
+      font-weight: 700;
+    }
+
+
     :root {
       color-scheme: dark;
       --bg: #070b18;
@@ -211,6 +307,30 @@
 
     .mini-ticket.white {
       border-color: rgba(255, 255, 255, 0.52);
+    }
+
+    /* Ensure mini-tickets keep their tier colors */
+    .mini-ticket.blue {
+      border-color: rgba(89, 184, 255, 0.44);
+      background: linear-gradient(135deg, rgba(89,184,255,0.22), rgba(255,255,255,0.04));
+      color: #071426;
+    }
+
+    .mini-ticket.red {
+      border-color: rgba(255, 95, 116, 0.48);
+      background: linear-gradient(135deg, rgba(255,95,116,0.22), rgba(255,255,255,0.04));
+      color: #071426;
+    }
+
+    .mini-ticket.pink {
+      border-color: rgba(255, 139, 214, 0.56);
+      background: linear-gradient(135deg, rgba(255,139,214,0.22), rgba(255,255,255,0.04));
+      color: #071426;
+    }
+
+    .mini-ticket.white {
+      background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(226,240,255,0.76));
+      color: #071426;
     }
 
     .mini-ticket.pink {
@@ -689,6 +809,7 @@
     }
 
     @keyframes gloss {
+
       0%,
       68% {
         transform: translateX(-120%);
@@ -700,6 +821,7 @@
     }
 
     @keyframes floatPanel {
+
       0%,
       100% {
         transform: translateY(0);
@@ -711,6 +833,7 @@
     }
 
     @media (max-width: 920px) {
+
       .hero,
       .controls {
         grid-template-columns: 1fr;
@@ -774,6 +897,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       *,
       *::before,
       *::after {
@@ -784,14 +908,16 @@
     }
   </style>
 </head>
+
 <body>
   <main class="page">
     <section class="hero" aria-label="Love coupon library">
       <div>
-        <p class="eyebrow">Coupon lookup</p>
+        <p class="eyebrow">Physical coupon lookup</p>
         <h1>Love Coupon Library</h1>
         <p class="lead">
-          A glossy little vault of sweet promises, tiny treats, soft moments, and love you can redeem whenever your heart wants.
+          A glossy little vault of sweet promises, tiny treats, soft moments, and love you can redeem whenever your
+          heart wants.
         </p>
       </div>
 
@@ -801,7 +927,8 @@
     </section>
 
     <section class="controls-shell" aria-label="Coupon controls">
-      <button id="filterToggle" class="filter-toggle" type="button" aria-expanded="false" aria-controls="couponControls">
+      <button id="filterToggle" class="filter-toggle" type="button" aria-expanded="false"
+        aria-controls="couponControls">
         Search & Sort
       </button>
       <div id="couponControls" class="controls">
@@ -850,7 +977,7 @@
       <h2>Coupon Rules</h2>
       <div class="terms-grid">
         <div class="term">
-          <strong>Valid only for Sayani Banarjee</strong>
+          <strong>Valid only for you</strong>
           These coupons are personal, non-transferable, and made only for the girl who owns my heart.
         </div>
         <div class="term">
@@ -874,8 +1001,6 @@
           Unlimited coupons stay open during the active subscription. Limited coupons count down only when used here.
         </div>
       </div>
-
-      <div style="color: #ffffff79;position: relative; top: 15px; width: 100%; text-align: right;">- Made By Arko 💙</div>
     </section>
   </main>
 
@@ -1017,21 +1142,22 @@
 
       grid.addEventListener("click", (event) => {
         const button = event.target.closest("[data-use]");
-        if (!button) {
-          return;
-        }
+        if (!button) return;
 
         const id = button.dataset.use;
         const coupon = state.coupons.find((item) => item.id === id);
-        if (!coupon || getRemaining(coupon) === 0) {
-          return;
-        }
 
-        if (coupon.tier !== "unlimited") {
-          state.used[id] = (state.used[id] || 0) + 1;
-          saveUsage();
-          render();
-        }
+        if (!coupon || getRemaining(coupon) === 0) return;
+
+        showCouponPopup(coupon, () => {
+
+          if (coupon.tier !== "unlimited") {
+            state.used[id] = (state.used[id] || 0) + 1;
+            saveUsage();
+            render();
+          }
+
+        });
       });
     }
 
@@ -1214,6 +1340,133 @@
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function showCouponPopup(coupon, onFinish) {
+
+      const modal = document.getElementById("couponModal");
+      const modalBox = modal.querySelector('.coupon-modal-box');
+      const title = document.getElementById("modalTitle");
+      const code = document.getElementById("modalCode");
+      const fill = document.getElementById("timerFill");
+      const timerText = document.getElementById("timerText");
+
+      title.textContent = coupon.title;
+      code.textContent = coupon.code;
+
+      // Apply tier class to modal box so it inherits the correct color
+      modalBox.classList.remove('blue', 'red', 'pink', 'white');
+      const themeClass = coupon.tier === 'unlimited' ? 'blue' : (coupon.tier === 'one-use' ? 'red' : (coupon.tier === 'pink' ? 'pink' : 'white'));
+      modalBox.classList.add(themeClass);
+
+      modal.classList.remove("hidden");
+
+      const total = 10;
+      let seconds = total;
+      timerText.textContent = `${seconds} seconds remaining`;
+
+      // Reset any previous transition and ensure fill is full
+      fill.style.transition = 'none';
+      fill.style.transform = 'scaleX(1)';
+
+      // Force reflow so the next transition will run
+      void fill.offsetWidth;
+
+      // Start smooth GPU-accelerated shrink over `total` seconds
+      fill.style.transition = `transform ${total}s linear`;
+      fill.style.transform = 'scaleX(0)';
+
+      const interval = setInterval(() => {
+        seconds--;
+        timerText.textContent = `${seconds} second${seconds === 1 ? '' : 's'} remaining`;
+        if (seconds <= 0) {
+          clearInterval(interval);
+        }
+      }, 1000);
+
+      const timeout = setTimeout(() => {
+        modal.classList.add("hidden");
+        // Reset fill for next open
+        fill.style.transition = 'none';
+        fill.style.transform = 'scaleX(1)';
+        modalBox.classList.remove('blue', 'red', 'pink', 'white');
+        if (typeof onFinish === "function") onFinish();
+      }, total * 1000);
+
+    }
   </script>
+
+
+
+  <div id="couponModal" class="coupon-modal hidden">
+    <div class="coupon-modal-box">
+      <h2 id="modalTitle">Coupon</h2>
+      <div id="modalCode" class="modal-code"></div>
+
+      <p class="modal-msg">
+        📸 Take a screenshot now!<br>
+        This coupon will disappear when the timer ends.
+      </p>
+
+      <div class="timer-bar">
+        <div id="timerFill" class="timer-fill"></div>
+      </div>
+
+      <div id="timerText">10 seconds remaining</div>
+    </div>
+  </div>
+
+
 </body>
+
 </html>
